@@ -1,0 +1,29 @@
+Objectifs pour semaine prochaine :
+  - Afficher la ligne sur winBGI
+
+
+A faire : 
+  - Coder les différentes classes (.h) 
+  - Parcourir le fichier CSV, le charger et stocker les valeurs dans les structures
+  - Représentation graphique
+  - Interface
+  - 
+  
+  
+  
+Ligne :
+  - constructeur avec un parametre ( numLigne )
+  
+CSV :
+  - definir les informations à stocker et l'oganisation de ces informations
+  - Arret ( nom ; posx ; posy ; tpsArret )
+  - Tram ( vitesse ; posx ; posy ; sens ; numLigne )
+  - Ligne ( #L 1)
+  - # : création d'un objet
+      - L : créer une ligne
+      - A : créer un arret
+      - T : créer un Tram
+  
+  
+  
+
