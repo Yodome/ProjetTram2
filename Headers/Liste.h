@@ -12,7 +12,7 @@
 class Liste
 {
 public:
-
+    Liste();
 private:
     Arret *d_arretTete;
     Arret *d_arretQueue;

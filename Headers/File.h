@@ -12,6 +12,7 @@
 class File
 {
 public:
+    File();
 
 private:
     Tram *d_premierTram;

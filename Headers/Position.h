@@ -9,6 +9,7 @@
 class Position
 {
 public:
+    Position();
     int getX() const;
     int getY() const;
 

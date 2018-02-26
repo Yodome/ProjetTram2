@@ -4,6 +4,9 @@
 
 #include "../Headers/Position.h"
 
+Position::Position() : d_x{0}, d_y{0}
+{}
+
 int Position::getX() const {
     return 0;
 }

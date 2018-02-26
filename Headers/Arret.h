@@ -13,7 +13,7 @@
 class Arret
 {
 public:
-
+    Arret();
 private:
     int d_tempsArretMin;
     std::string d_libelle;

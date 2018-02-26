@@ -3,3 +3,7 @@
 //
 
 #include "../Headers/File.h"
+
+File::File() : d_premierTram{nullptr} , d_dernierTram{nullptr}{
+
+}

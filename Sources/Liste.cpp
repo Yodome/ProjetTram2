@@ -3,3 +3,6 @@
 //
 
 #include "../Headers/Liste.h"
+
+Liste::Liste(): d_arretTete{nullptr}, d_arretQueue{nullptr}
+{}

@@ -8,11 +8,12 @@
 
 #include "Position.h"
 #include "Arret.h"
-#include "Ligne.h"
+
 
 class Tram
 {
 public:
+    Tram();
 
 
 private:
@@ -21,10 +22,10 @@ private:
     int d_tempsArret;
     int d_distanceMin;
     int d_vitesseMax;
+    int d_numLigne;
     Position d_position;
     Tram *d_tramSuiv;
     Arret *d_arretSuiv;
-    Ligne *d_ligne;
 };
 
 

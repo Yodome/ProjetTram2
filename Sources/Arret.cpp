@@ -3,3 +3,8 @@
 //
 
 #include "../Headers/Arret.h"
+
+Arret::Arret():d_tempsArretMin{1000}, d_libelle{""}, d_position{}, d_arretSuiv{nullptr}, d_arretPrec{nullptr}
+{
+
+}
