@@ -12,6 +12,8 @@ public:
     Position();
     int getX() const;
     int getY() const;
+    Position& getPos()  ;
+    void setPos(int x, int y)  ;
 
 
 private:

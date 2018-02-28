@@ -1,8 +1,3 @@
-//
-// Created on 20/02/2018.
-// File de Tram
-//
-
 #ifndef PROJETTRAM_FILE_H
 #define PROJETTRAM_FILE_H
 
@@ -13,6 +8,11 @@ class File
 {
 public:
     File();
+    Tram& getPremierTram() const;
+    Tram& getDernierTram() const;
+
+    void setPremierTram(Tram& premierTram);
+    void setDernierTram(Tram& dernierTram);
 
 private:
     Tram *d_premierTram;

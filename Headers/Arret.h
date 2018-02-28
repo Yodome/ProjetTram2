@@ -14,6 +14,13 @@ class Arret
 {
 public:
     Arret();
+    Position& getPosition() ;
+    int getTempsArret() const;
+    void setLibelle(std::string nom);
+    void setPotistion(int x, int y);
+    void setTempsArret(int temps);
+
+
 private:
     int d_tempsArretMin;
     std::string d_libelle;

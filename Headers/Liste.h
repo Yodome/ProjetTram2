@@ -13,6 +13,12 @@ class Liste
 {
 public:
     Liste();
+    Arret& getTeteArret() const ;
+    Arret& getQueueArret() const ;
+    void setTeteArret(Arret& arretTete);
+    void setQueueArret(Arret& arretQueue);
+
+
 private:
     Arret *d_arretTete;
     Arret *d_arretQueue;
