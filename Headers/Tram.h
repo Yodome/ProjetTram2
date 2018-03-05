@@ -13,40 +13,41 @@
 class Tram
 {
 public:
-    Tram();
+	Tram();
 
-    //getter
-    bool getVitesse() const ;
-    int getVitessemax() const ;
-    bool getSens() const ;
-    int getTempsArret() const ;
-    int getDistanceMin() const ;
-    int getNumLigne() const ;
-    Position getPosition() ;
-    Tram& getTramSuivant() const ;
-    Arret& getArretSuivant() const ;
+	//getter
+	bool getVitesse() const;
+	int getVitessemax() const;
+	bool getSens() const;
+	int getTempsArret() const;
+	int getDistanceMin() const;
+	int getNumLigne() const;
+	Position getPosition();
+	Tram& getTramSuivant() const;
+	Arret& getArretSuivant() const;
 
-    //setter
-    void setVitesse(bool vitesse)  ;
-    void setVitessemax(int vitesseMax)  ;
-    void setSens(bool sens)  ;
-    void setTempsArret(int tempsArret)  ;
-    void setDistanceMin(int distanceMin)  ;
-    void setNumLigne(int numLigne)  ;
-    void setPosition(int x, int y) ;
-    void setTramSuivant(Tram& tramSuivant)  ;
-    void setArretSuivant(Arret& arretSuivant)  ;
+	//setter
+	void setVitesse(bool vitesse);
+	void setVitessemax(int vitesseMax);
+	void setSens(bool sens);
+	void setTempsArret(int tempsArret);
+	void setDistanceMin(int distanceMin);
+	void setNumLigne(int numLigne);
+	void setPosition(int x, int y);
+	void setTramSuivant(Tram& tramSuivant);
+	void setArretSuivant(Arret& arretSuivant);
 
+	friend class File;
 private:
-    bool d_vitesse;
-    int d_vitesseMax;
-    bool d_sens;
-    int d_tempsArret;
-    int d_distanceMin;
-    int d_numLigne;
-    Position d_position;
-    Tram *d_tramSuiv;
-    Arret *d_arretSuiv;//friend, on veut juste avoir le prochain
+	bool d_vitesse;
+	int d_vitesseMax;
+	bool d_sens;
+	int d_tempsArret;
+	int d_distanceMin;
+	int d_numLigne;
+	Position d_position;
+	Tram *d_tramSuiv;
+	Arret *d_arretSuiv;//friend, on veut juste avoir le prochain
 };
 
 

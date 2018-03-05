@@ -9,16 +9,16 @@
 class Position
 {
 public:
-    Position();
-    int getX() const;
-    int getY() const;
-    Position& getPos()  ;
-    void setPos(int x, int y)  ;
+	Position();
+	int getX() const;
+	int getY() const;
+	Position& getPos();
+	void setPos(int x, int y);
 
 
 private:
-    int d_x;
-    int d_y;
+	int d_x;
+	int d_y;
 };
 
 

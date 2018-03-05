@@ -13,20 +13,21 @@
 class Arret
 {
 public:
-    Arret();
-    Position& getPosition() ;
-    int getTempsArret() const;
-    void setLibelle(std::string nom);
-    void setPotistion(int x, int y);
-    void setTempsArret(int temps);
+	Arret();
+	Arret(int tempsArretMin, std::string libelle, Position pos);
+	Position& getPosition();
+	int getTempsArret() const;
+	void setLibelle(std::string nom);
+	void setPotistion(int x, int y);
+	void setTempsArret(int temps);
 
-
+	friend class Liste;
 private:
-    int d_tempsArretMin;
-    std::string d_libelle;
-    Position d_position;
-    Arret *d_arretSuiv;
-    Arret *d_arretPrec;
+	int d_tempsArretMin;
+	std::string d_libelle;
+	Position d_position;
+	Arret *d_arretSuiv;
+	Arret *d_arretPrec;
 
 };
 

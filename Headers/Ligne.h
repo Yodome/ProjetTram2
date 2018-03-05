@@ -13,22 +13,22 @@ class Ligne
 {
 
 public:
-    Ligne( int num );
-    int getLigne() const;
-    Liste& getListeArret() const;
-    File& getSensFileAller() const;
-    File& getSensFileRetour() const;
+	Ligne(int num);
+	int getLigne() const;
+	Liste& getListeArret() const;
+	File& getSensFileAller() const;
+	File& getSensFileRetour() const;
 
-    void setLigne(int num);
-    void setListeArret(Liste &listeArret);
-    void setSensFileAller(File &sensFileAller);
-    void setListeArret(File &sensFileAller);
+	void setLigne(int num);
+	void setListeArret(Liste &listeArret);
+	void setSensFileAller(File &sensFileAller);
+	void setListeArret(File &sensFileAller);
 
 private:
-    int d_num;
-    Liste *d_listeArret;
-    File *d_fileSensAller;
-    File *d_fileSensRetour;
+	int d_num;
+	Liste *d_listeArret;
+	File *d_fileSensAller;
+	File *d_fileSensRetour;
 
 };
 

@@ -12,16 +12,18 @@
 class Liste
 {
 public:
-    Liste();
-    Arret& getTeteArret() const ;
-    Arret& getQueueArret() const ;
-    void setTeteArret(Arret& arretTete);
-    void setQueueArret(Arret& arretQueue);
+	Liste();
+	Liste(Liste &l);	// constructeur par recopie
+	Arret& getTeteArret() const;
+	Arret& getQueueArret() const;
+	void setTeteArret(Arret& arretTete);
+	void setQueueArret(Arret& arretQueue);
+	void insererEnQueue();
 
 
 private:
-    Arret *d_arretTete;
-    Arret *d_arretQueue;
+	Arret * d_arretTete;
+	Arret *d_arretQueue;
 
 };
 
