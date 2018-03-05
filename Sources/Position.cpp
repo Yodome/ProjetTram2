@@ -3,28 +3,28 @@
 //
 
 
-#include "../Headers/Position.h"
+#include "..\Headers\Position.h"
 
-Position::Position() : d_x{0}, d_y{0}
+Position::Position() : d_x{ 0 }, d_y{ 0 }
 {}
 
 int Position::getX() const
 {
-    return 0;
+	return 0;
 }
 
 int Position::getY() const
 {
-    return 0;
+	return 0;
 }
 
 Position& Position::getPos()
 {
-    return *this;
+	return *this;
 }
 
 void Position::setPos(int x, int y)
 {
-    d_x = x;
-    d_y =y;
+	d_x = x;
+	d_y = y;
 }
