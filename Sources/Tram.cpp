@@ -108,49 +108,28 @@ void Tram::setArretSuivant(Arret &arretSuivant)
 
 void Tram::avance()
 {
-	// 1. Détermination du nombre de pixels dont le tram doit avancer
+	Position posArretSuiv = d_arretSuiv->getPosition();
 
-	// variation de x et y pour changer les coordonnées du tram (th. Pythagore)
-	double variation = sqrt((pow(d_vitesse, 2) / 2));
+	// distance à l'arret suivant
+	double ds = distanceArretSuiv();
 
+	// distance de l'arrêt selon la future position du tram
+	double dt = ds - d_vitesse;
 
-	// 2. Changement de la position du tram
+	double a = dt / ds;
 
-	// position de l'arrêt vers lequel se dirige le tram
-	Position pArretSuiv = d_arretSuiv->getPosition();
-
-	if (d_sens)	// avance de gauche à droite (d_sens = true)
-	{	
-		// cas où la droite entre les deux arrêts autour du tram est décroissante 
-		if (pArretSuiv.getX() > d_position.getX() && pArretSuiv.getY() > d_position.getY())		// <==> prochain arrêt visuellement en-dessous du tram
-		{
-			d_position.setPos(d_position.getX() + variation, d_position.getY() + variation);
-		}
-		// cas où la droite entre les deux arrêts autour du tram est croissante
-		else if (pArretSuiv.getX() > d_position.getX() && pArretSuiv.getY() < d_position.getY())	// <==> prochain arrêt visuellement au-dessus du tram
-		{
-			d_position.setPos(d_position.getX() + variation, d_position.getY - variation);
-		}
-	}
-	else	// avance de droite à gauche (d_sens = false)
-	{
-		// droite décroissante (prochain arêt en-dessous du tram)
-		if (pArretSuiv.getX() < d_position.getX() && pArretSuiv.getY() > d_position.getY())
-		{
-			d_position.setPos(d_position.getX() - variation, d_position.getY() + variation);
-		}
-		// droite croissante (prochain arrêt au-dessus du tram)
-		else if (pArretSuiv.getX() < d_position.getX() && pArretSuiv.getY() < d_position.getY())
-		{
-			d_position.setPos(d_position.getX() - variation, d_position.getY() - variation);
-		}
-	}
+	d_position.setPos((1 - a)*d_position.getX() - a * d_arretSuiv->getPosition().getX(),
+						(1 - a)*d_position.getY() - a * d_arretSuiv->getPosition().getY());
 }
 
 double Tram::distanceTramDevant() const
 {
-	double distance = sqrt(pow( (d_tramSuiv->d_position.getX() - d_position.getX()), 2) + pow((d_tramSuiv->d_position.getY() - d_position.getY()), 2));
-	return distance;
+	return sqrt(pow( (d_tramSuiv->d_position.getX() - d_position.getX()), 2) + pow((d_tramSuiv->d_position.getY() - d_position.getY()), 2));
+}
+
+double Tram::distanceArretSuiv() const
+{
+	return sqrt(pow(d_arretSuiv->getPosition().getX() - d_position.getX(), 2) + pow(d_arretSuiv->getPosition().getY() - d_position.getY(), 2));
 }
 
 bool Tram::doitSArreter()
