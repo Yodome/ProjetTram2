@@ -39,6 +39,7 @@ public:
 
 	void avance();	// détermine la position du tram selon sa vitesse
 	double distanceTramDevant() const;
+	double distanceArretSuiv() const;
 	bool doitSArreter();	// indique si le tram doit s'arrêt (ne procède à aucun changement des coordonnées du tram)
 	void arret();
 
