@@ -23,6 +23,12 @@ CSV :
       - L : créer une ligne
       - A : créer un arret
       - T : créer un Tram
+      
+-----------------------------------------------------------------------------------
+  (08/03)
+Faire une méthode size() pour Liste et File (afin de se faciliter la vie quand on fait des boucle for)
+
+
   
   
   
