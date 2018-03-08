@@ -13,6 +13,7 @@ class Ligne
 {
 
 public:
+	Ligne();
 	Ligne(int num);
 	int getLigne() const;
 	Liste& getListeArret() const;
