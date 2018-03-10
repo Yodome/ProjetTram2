@@ -37,14 +37,14 @@ void Ligne::setLigne(int num) {
 	d_num = num;
 }
 
-void Ligne::setListeArret(Liste &listeArret) {
-	*d_listeArret = listeArret;
+void Ligne::setListeArret(Liste *listeArret) {
+	d_listeArret = listeArret;
 }
 
-void Ligne::setSensFileAller(File &sensFileAller) {
-	*d_fileSensAller = sensFileAller;
+void Ligne::setSensFileAller(File *sensFileAller) {
+	d_fileSensAller = sensFileAller;
 }
 
-void Ligne::setListeArret(File &sensFileRetour) {
-	*d_fileSensRetour = sensFileRetour;
+void Ligne::setSensFileRetour(File *sensFileRetour) {
+	d_fileSensRetour = sensFileRetour;
 }

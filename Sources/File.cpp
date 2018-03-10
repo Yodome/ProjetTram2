@@ -34,16 +34,17 @@ void File::setDernierTram(Tram &dernierTram)
 	*d_dernierTram = dernierTram;
 }
 
-void File::entrer(Tram & tr)
+void File::entrer(Tram &tr)
 {
 	if (d_premierTram == 0)
 	{
-		d_premierTram = d_dernierTram = new Tram();
+		d_premierTram = d_dernierTram = &tr;
 	}
 	else
 	{
-		d_dernierTram->d_tramSuiv = new Tram();
+		d_dernierTram->d_tramSuiv = &tr;
 		d_dernierTram = d_dernierTram->d_tramSuiv;
+		tr.d_tramSuiv = 0;
 	}
 }
 

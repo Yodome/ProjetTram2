@@ -21,9 +21,9 @@ public:
 	File& getSensFileRetour() const;
 
 	void setLigne(int num);
-	void setListeArret(Liste &listeArret);
-	void setSensFileAller(File &sensFileAller);
-	void setListeArret(File &sensFileAller);
+	void setListeArret(Liste *listeArret);
+	void setSensFileAller(File *sensFileAller);
+	void setSensFileRetour(File *sensFileRetour);
 
 private:
 	int d_num;

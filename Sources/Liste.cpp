@@ -4,7 +4,7 @@
 
 #include "..\Headers\Liste.h"
 
-Liste::Liste() : d_arretTete{ nullptr }, d_arretQueue{ nullptr }
+Liste::Liste() : d_taille{0}, d_arretTete{ nullptr }, d_arretQueue{ nullptr }
 {}
 
 Liste::Liste(Liste & l)
@@ -56,7 +56,7 @@ void Liste::setQueueArret(Arret &arretQueue)
 // A refaire (�a fait des erreurs)
 void Liste::insererEnQueue(Arret& ar) // ajouter les exceptions
 {
-    if (estVide())
+    if (this->estVide())
     {
         d_arretTete = &ar;
         d_arretQueue = &ar;
@@ -71,7 +71,7 @@ void Liste::insererEnQueue(Arret& ar) // ajouter les exceptions
 
 bool Liste::estVide()
 {
-    return d_arretTete == 0;
+    return (d_arretTete == nullptr);
 }
 
 int Liste::getTaille() {

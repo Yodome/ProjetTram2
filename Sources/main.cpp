@@ -40,6 +40,17 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
             int numLigne ;
             f >> numLigne;
             Ligne *ligne = new Ligne(numLigne); // creation de la ligne avec son numero en param
+
+            // Creation de la liste d'arrets
+            Liste *listeArrets = new Liste();
+            ligne->setListeArret(listeArrets);
+
+            // Creation de la file de trams
+            File *fileSensAllerTr = new File();
+            File *fileSensRetourTr = new File();
+            ligne->setSensFileAller(fileSensAllerTr);
+            ligne->setSensFileRetour(fileSensRetourTr);
+
             tabLigne.push_back(*ligne);
             indice++;
         }
@@ -52,20 +63,25 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
             ar->setIdArret(id);
             ar->setLibelle(libelle);
             ar->setPotistion(posx, posy);
-            ar->setTempsArret(tempsArret); // On a stop ici
+            ar->setTempsArret(tempsArret);
             tabLigne[indice].getListeArret().insererEnQueue(*ar); // ajout de l'arret en queue de liste
         }
         else if(s == "#T")
         {
             Tram *tr = new Tram;
 
-            int vitTr;
+            bool vitTr;
             int posXTr;
             int posYTr;
             bool sensTr;
             int numLigneTr;
 
             f >> vitTr >> posXTr >> posYTr >> sensTr >> numLigneTr;
+
+            tr->setVitesse(vitTr);
+            tr->setPosition(posXTr, posYTr);
+            tr->setSens(sensTr);
+            tr->setNumLigne(numLigneTr);
 
             if(tr->getSens())	// sens aller
             {
