@@ -106,6 +106,16 @@ void Tram::setArretSuivant(Arret &arretSuivant)
 	*d_arretSuiv = arretSuivant;
 }
 
+double Tram::distanceTramDevant() const
+{
+	return sqrt(pow( (d_tramSuiv->d_position.getX() - d_position.getX()), 2) + pow((d_tramSuiv->d_position.getY() - d_position.getY()), 2));
+}
+
+double Tram::distanceArretSuiv() const
+{
+	return sqrt(pow(d_arretSuiv->getPosition().getX() - d_position.getX(), 2) + pow(d_arretSuiv->getPosition().getY() - d_position.getY(), 2));
+}
+
 void Tram::avance()
 {
 	Position posArretSuiv = d_arretSuiv->getPosition();
@@ -118,18 +128,8 @@ void Tram::avance()
 
 	double a = dt / ds;
 
-	d_position.setPos((1 - a)*d_position.getX() - a * d_arretSuiv->getPosition().getX(),
-						(1 - a)*d_position.getY() - a * d_arretSuiv->getPosition().getY());
-}
-
-double Tram::distanceTramDevant() const
-{
-	return sqrt(pow( (d_tramSuiv->d_position.getX() - d_position.getX()), 2) + pow((d_tramSuiv->d_position.getY() - d_position.getY()), 2));
-}
-
-double Tram::distanceArretSuiv() const
-{
-	return sqrt(pow(d_arretSuiv->getPosition().getX() - d_position.getX(), 2) + pow(d_arretSuiv->getPosition().getY() - d_position.getY(), 2));
+	d_position.setPos(static_cast<int>((1 - a)*d_position.getX() - a * d_arretSuiv->getPosition().getX()),
+						static_cast<int>((1 - a)*d_position.getY() - a * d_arretSuiv->getPosition().getY()));
 }
 
 bool Tram::doitSArreter()
