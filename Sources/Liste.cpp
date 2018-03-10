@@ -50,11 +50,13 @@ void Liste::setQueueArret(Arret &arretQueue)
 	*d_arretQueue = arretQueue;
 }
 
-void Liste::insererEnQueue()
+// A refaire (ça fait des erreurs)
+void Liste::insererEnQueue(Arret& ar)
 {
-	Arret *ar = new Arret();
-	ar->d_arretPrec = d_arretQueue;
+	/*
+	ar.d_arretPrec = d_arretQueue;
 	d_arretQueue->d_arretSuiv = ar;
 	ar->d_arretSuiv = 0;
 	d_arretQueue = ar;
+	*/
 }
