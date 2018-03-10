@@ -14,14 +14,17 @@ class Liste
 public:
 	Liste();
 	Liste(Liste &l);	// constructeur par recopie
-	Arret& getTeteArret() const;
+	Arret * getTeteArret() const;
 	Arret& getQueueArret() const;
 	void setTeteArret(Arret& arretTete);
 	void setQueueArret(Arret& arretQueue);
-	void insererEnQueue();
+	void insererEnQueue(Arret& ar);
+    int getTaille();
+    bool estVide();
 
 
 private:
+    int d_taille;
 	Arret * d_arretTete;
 	Arret *d_arretQueue;
 

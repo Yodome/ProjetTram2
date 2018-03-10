@@ -30,9 +30,9 @@ Liste::Liste(Liste & l)
 	}
 }
 
-Arret &Liste::getTeteArret() const
+Arret * Liste::getTeteArret() const
 {
-	return *d_arretTete;
+	return d_arretTete;
 }
 
 Arret &Liste::getQueueArret() const
@@ -47,16 +47,33 @@ void Liste::setTeteArret(Arret &arretTete)
 
 void Liste::setQueueArret(Arret &arretQueue)
 {
-	*d_arretQueue = arretQueue;
+    arretQueue.d_arretPrec = d_arretQueue; // le precedent du nouveau chainon pointe vers la queue de liste
+    d_arretQueue->d_arretSuiv = &arretQueue; // le chainon ar devient la queue
+    arretQueue.d_arretSuiv = 0;
+    d_arretQueue = &arretQueue;
 }
 
-// A refaire (ça fait des erreurs)
-void Liste::insererEnQueue(Arret& ar)
+// A refaire (ï¿½a fait des erreurs)
+void Liste::insererEnQueue(Arret& ar) // ajouter les exceptions
 {
-	/*
-	ar.d_arretPrec = d_arretQueue;
-	d_arretQueue->d_arretSuiv = ar;
-	ar->d_arretSuiv = 0;
-	d_arretQueue = ar;
-	*/
+    if (estVide())
+    {
+        d_arretTete = &ar;
+        d_arretQueue = &ar;
+
+    }
+    else
+    {
+        setQueueArret(ar);
+    }
+    d_taille++;
+}
+
+bool Liste::estVide()
+{
+    return d_arretTete == 0;
+}
+
+int Liste::getTaille() {
+    return  d_taille;
 }

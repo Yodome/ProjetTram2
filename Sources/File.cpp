@@ -49,25 +49,25 @@ void File::entrer(Tram & tr)
 
 Tram& File::sortir()
 {
-	Tram tr;
-	tr.d_vitesse = d_premierTram->d_vitesse;
-	tr.d_vitesseMax = d_premierTram->d_vitesseMax;
-	tr.d_sens = d_premierTram->d_sens;
-	tr.d_tempsArret = d_premierTram->d_tempsArret;
-	tr.d_distanceMin = d_premierTram->d_distanceMin;
-	tr.d_numLigne = d_premierTram->d_numLigne;
-	tr.d_position = d_premierTram->d_position;
+	Tram *tr = new Tram();
+	tr->d_vitesse = d_premierTram->d_vitesse;
+	tr->d_vitesseMax = d_premierTram->d_vitesseMax;
+	tr->d_sens = d_premierTram->d_sens;
+	tr->d_tempsArret = d_premierTram->d_tempsArret;
+	tr->d_distanceMin = d_premierTram->d_distanceMin;
+	tr->d_numLigne = d_premierTram->d_numLigne;
+	tr->d_position = d_premierTram->d_position;
 
 	Tram *as = d_premierTram;
 	d_premierTram = d_premierTram->d_tramSuiv;
 
-	if (d_premierTram == 0)	// ça devient une file vide
+	if (d_premierTram == 0)	// ï¿½a devient une file vide
 	{
 		d_dernierTram = 0;
 	}
 
 	delete as;
-	return tr;
+	return *tr;
 }
 
 bool File::estVide() const

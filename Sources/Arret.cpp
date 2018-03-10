@@ -11,7 +11,7 @@ Arret::Arret() :d_tempsArretMin{ 1000 }, d_libelle{ "" }, d_position{}, d_arretS
 
 }
 
-Arret::Arret(int tempsArretMin, std::string libelle, Position pos) : d_tempsArretMin{tempsArretMin}, d_libelle{libelle}, d_position{pos}, d_arretSuiv{ nullptr }, d_arretPrec{ nullptr }
+Arret::Arret(int idArret, int tempsArretMin, std::string libelle, Position pos) :d_idArret{idArret} , d_tempsArretMin{tempsArretMin}, d_libelle{libelle}, d_position{pos}, d_arretSuiv{ nullptr }, d_arretPrec{ nullptr }
 {
 
 }
@@ -40,3 +40,29 @@ void Arret::setTempsArret(int temps)
 {
 	d_tempsArretMin = temps;
 }
+
+std::string Arret::getLibelle() const
+{
+    return d_libelle;
+}
+
+int Arret::getIdArret() const
+{
+    return d_idArret;
+}
+
+Arret *Arret::getArretSuivant() const
+{
+    return d_arretSuiv;
+}
+
+Arret *Arret::getArretPrecedent() const
+{
+    return d_arretPrec;
+}
+
+void Arret::setIdArret(int id)
+{
+    d_idArret = id;
+}
+
