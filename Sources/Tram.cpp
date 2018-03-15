@@ -5,7 +5,7 @@
 #include "..\Headers\Tram.h"
 #include <cmath>
 
-Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 1000 }, d_distanceMin{ 100 },
+Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{}, d_distanceMin{ 100 },
 d_vitesseMax{ 20 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
 d_numLigne{ 0 }
 {
@@ -120,10 +120,10 @@ void Tram::avance()
 {
 	Position posArretSuiv = d_arretSuiv->getPosition();
 
-	// distance à l'arret suivant
+	// distance ï¿½ l'arret suivant
 	double ds = distanceArretSuiv();
 
-	// distance de l'arrêt selon la future position du tram
+	// distance de l'arrï¿½t selon la future position du tram
 	double dt = ds - d_vitesse;
 
 	double a = dt / ds;

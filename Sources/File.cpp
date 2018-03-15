@@ -4,9 +4,8 @@
 
 #include "..\Headers\File.h"
 
-File::File() : d_premierTram{ nullptr }, d_dernierTram{ nullptr } {
-
-}
+File::File() : d_taille{0}, d_premierTram{ nullptr }, d_dernierTram{ nullptr }
+{}
 
 File::~File()
 {
