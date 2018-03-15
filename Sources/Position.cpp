@@ -10,12 +10,12 @@ Position::Position() : d_x{ 0 }, d_y{ 0 }
 
 int Position::getX() const
 {
-	return 0;
+	return d_x;
 }
 
 int Position::getY() const
 {
-	return 0;
+	return d_y;
 }
 
 Position& Position::getPos()
