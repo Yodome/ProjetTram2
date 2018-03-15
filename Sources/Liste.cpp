@@ -35,9 +35,9 @@ Arret * Liste::getTeteArret() const
 	return d_arretTete;
 }
 
-Arret &Liste::getQueueArret() const
+Arret * Liste::getQueueArret() const
 {
-	return *d_arretQueue;
+	return d_arretQueue;
 }
 
 void Liste::setTeteArret(Arret &arretTete)
@@ -74,6 +74,7 @@ bool Liste::estVide()
     return (d_arretTete == nullptr);
 }
 
-int Liste::getTaille() {
+int Liste::getTaille() const
+{
     return  d_taille;
 }

@@ -114,6 +114,21 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
 
 //        std::cout << tabLigne[indice].arrets[i].nomArret << " " << tabLigne[indice].arrets[i].posx << " " << tabLigne[indice].arrets[i].posy << " " << tabLigne[indice].arrets[i].tempsArret << std::endl;
     }
+
+
+    std::cout << "Trams : " << std::endl;
+
+    Tram* tramCourant = new Tram();
+    for(int i = 0; i < tabLigne[indice].getSensFileRetour().getTaille(); i++)
+    {
+        tramCourant = tabLigne[indice].getSensFileRetour().getPremierTram();
+
+        std::cout << tramCourant->getVitesse() << " "
+                  << tramCourant->getPosition().getX() << " "
+                  << tramCourant->getPosition().getY() << " "
+                  << tramCourant->getSens() << " "
+                  << tramCourant->getNumLigne() << std::endl;
+    }
 }
 
 

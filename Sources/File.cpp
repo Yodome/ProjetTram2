@@ -13,14 +13,14 @@ File::~File()
 	while (d_premierTram) sortir();
 }
 
-Tram &File::getPremierTram() const
+Tram * File::getPremierTram() const
 {
-	return *d_premierTram;
+	return d_premierTram;
 }
 
-Tram &File::getDernierTram() const
+Tram * File::getDernierTram() const
 {
-	return *d_dernierTram;
+	return d_dernierTram;
 }
 
 
@@ -46,6 +46,8 @@ void File::entrer(Tram &tr)
 		d_dernierTram = d_dernierTram->d_tramSuiv;
 		tr.d_tramSuiv = 0;
 	}
+
+	d_taille++;
 }
 
 Tram& File::sortir()
@@ -67,6 +69,7 @@ Tram& File::sortir()
 		d_dernierTram = 0;
 	}
 
+	d_taille--;
 	delete as;
 	return *tr;
 }
@@ -74,4 +77,8 @@ Tram& File::sortir()
 bool File::estVide() const
 {
 	return d_premierTram == 0;
+}
+
+int File::getTaille() const {
+	return d_taille;
 }

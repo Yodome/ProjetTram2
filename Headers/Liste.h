@@ -15,11 +15,11 @@ public:
 	Liste();
 	Liste(Liste &l);	// constructeur par recopie
 	Arret * getTeteArret() const;
-	Arret& getQueueArret() const;
+	Arret * getQueueArret() const;
 	void setTeteArret(Arret& arretTete);
 	void setQueueArret(Arret& arretQueue);
 	void insererEnQueue(Arret& ar);
-    int getTaille();
+    int getTaille() const;
     bool estVide();
 
 
