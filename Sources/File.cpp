@@ -36,7 +36,7 @@ void File::setDernierTram(Tram &dernierTram)
 
 void File::entrer(Tram &tr)
 {
-	if (d_premierTram == 0)
+	if (this->estVide())
 	{
 		d_premierTram = d_dernierTram = &tr;
 	}
@@ -76,7 +76,7 @@ Tram& File::sortir()
 
 bool File::estVide() const
 {
-	return d_premierTram == 0;
+	return (d_premierTram == nullptr);
 }
 
 int File::getTaille() const {

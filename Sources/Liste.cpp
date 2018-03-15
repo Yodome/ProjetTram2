@@ -69,7 +69,7 @@ void Liste::insererEnQueue(Arret& ar) // ajouter les exceptions
     d_taille++;
 }
 
-bool Liste::estVide()
+bool Liste::estVide() const
 {
     return (d_arretTete == nullptr);
 }

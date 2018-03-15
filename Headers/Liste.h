@@ -20,7 +20,7 @@ public:
 	void setQueueArret(Arret& arretQueue);
 	void insererEnQueue(Arret& ar);
     int getTaille() const;
-    bool estVide();
+    bool estVide() const;
 
 
 private:
