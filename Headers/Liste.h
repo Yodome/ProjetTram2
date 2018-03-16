@@ -14,8 +14,10 @@ class Liste
 public:
 	Liste();
 	Liste(Liste &l);	// constructeur par recopie
+	~Liste();
 	Arret * getTeteArret() const;
 	Arret * getQueueArret() const;
+    Arret * getArret(int n) const;
 	void setTeteArret(Arret& arretTete);
 	void setQueueArret(Arret& arretQueue);
 	void insererEnQueue(Arret& ar);

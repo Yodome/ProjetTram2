@@ -75,13 +75,17 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
             int posYTr;
             bool sensTr;
             int numLigneTr;
+            int numArretSuiv;
 
-            f >> vitTr >> posXTr >> posYTr >> sensTr >> numLigneTr;
+            f >> vitTr >> posXTr >> posYTr >> sensTr >> numLigneTr >> numArretSuiv;
 
             tr->setVitesse(vitTr);
             tr->setPosition(posXTr, posYTr);
             tr->setSens(sensTr);
             tr->setNumLigne(numLigneTr);
+            tr->setNumArretSuivant( numArretSuiv);
+            tr->setArretSuivant(*tabLigne[indice].getListeArret().getArret(numArretSuiv));
+
 
             if(tr->getSens())	// sens aller
             {
@@ -98,14 +102,19 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
         }
 
     }
+}
 
+
+//-------------------------------------- TEST -----------------------------------
+void testAfficherLigne(std::vector<Ligne> &tabLigne)
+{
+    int indice = 0;
     std::cout << "Arrets : " << std::endl;
-
-
     Arret *arretCourant = new Arret();
+    arretCourant = tabLigne[indice].getListeArret().getTeteArret();
     for(int i = 0; i < tabLigne[indice].getListeArret().getTaille(); i++)
     {
-        arretCourant = tabLigne[indice].getListeArret().getTeteArret();
+
         std::cout << arretCourant->getIdArret() << " "
                   << arretCourant->getLibelle() << " "
                   << arretCourant->getPosition().getX() << " "
@@ -113,108 +122,89 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
                   << arretCourant->getTempsArret() << std::endl;
 
 //        std::cout << tabLigne[indice].arrets[i].nomArret << " " << tabLigne[indice].arrets[i].posx << " " << tabLigne[indice].arrets[i].posy << " " << tabLigne[indice].arrets[i].tempsArret << std::endl;
+        arretCourant = arretCourant->getArretSuivant();
     }
 
 
     std::cout << "Trams : " << std::endl;
 
     Tram* tramCourant = new Tram();
-    for(int i = 0; i < tabLigne[indice].getSensFileRetour().getTaille(); i++)
+    tramCourant = tabLigne[indice].getSensFileAller().getPremierTram();
+    for(int i = 0; i < tabLigne[indice].getSensFileAller().getTaille(); i++)
     {
-        tramCourant = tabLigne[indice].getSensFileRetour().getPremierTram();
+
 
         std::cout << tramCourant->getVitesse() << " "
                   << tramCourant->getPosition().getX() << " "
                   << tramCourant->getPosition().getY() << " "
                   << tramCourant->getSens() << " "
-                  << tramCourant->getNumLigne() << std::endl;
+                  << tramCourant->getNumLigne() << " "
+                  << tramCourant->getNumArretSuivant() <<  std::endl;
+        tramCourant = tramCourant->getTramSuivant();
+    }
+    indice ++ ;
+}
+
+void afficherReseau(const std::vector<Ligne> &tabDeLignes)
+{
+    for(int i = 0; i < tabDeLignes.size(); i++)
+    {
+        Arret * arCrt = tabDeLignes[i].getListeArret().getTeteArret();
+
+        for(int j = 0; j < tabDeLignes[i].getListeArret().getTaille(); j++)
+        {
+            bar(arCrt->getPosition().getX()-5, arCrt->getPosition().getY()-5,
+                arCrt->getPosition().getX()+5, arCrt->getPosition().getY()+5);
+
+            if(arCrt->getArretSuivant() != 0)
+            {
+                line(arCrt->getPosition().getX(), arCrt->getPosition().getY(),
+                     arCrt->getArretSuivant()->getPosition().getX(), arCrt->getArretSuivant()->getPosition().getY());
+            }
+
+            arCrt = arCrt->getArretSuivant();
+        }
+
     }
 }
 
-
-/*void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
+void afficherTrams(const std::vector<Ligne> &tabDeLignes)
 {
-    std::ifstream f(nomFichier);
-
-    int nbLignes; 	// nombres de lignes du réseau, nécessaire à la création d'un tableau dynamique de lignes
-
-    char p; 		// p pour poubelle
-
-    f >> nbLignes;
-
-
-
-    tabLigne.reserve(nbLignes);
-
-    int indice = -1;
-    int numeroLigne = 1;
-
-    while(!f.eof())
+    for(int i = 0; i < tabDeLignes.size(); i++)
     {
-        std::string s;	// variable qui prend '#L", "#A" ou "#T" comme valeurs
+        Tram * trCrtAller = tabDeLignes[i].getSensFileAller().getPremierTram();
+        Tram * trCrtRetour = tabDeLignes[i].getSensFileRetour().getPremierTram();
 
-        f >> s;
-
-        if(s == "#L")
+        for(int j = 0; j < tabDeLignes[i].getSensFileAller().getTaille(); j++)
         {
-            Ligne ligne;
-            std::string tmp;
-            f >> tmp;
-            ligne.setLigne(std::atoi(tmp.c_str()));
+            circle(trCrtAller->getPosition().getX(), trCrtAller->getPosition().getY(), 10);
 
-            tabLigne.push_back(ligne);
-            ++indice;
-            ++numeroLigne;
+            trCrtAller = trCrtAller->getTramSuivant();
         }
 
-        else if( s == "#A")
+        for(int j = 0; j < tabDeLignes[i].getSensFileRetour().getTaille(); j++)
         {
-            Arret ar;
+            circle(trCrtRetour->getPosition().getX(), trCrtRetour->getPosition().getY(), 10);
 
-            std::string nomAr;
-            int posXAr;
-            int posYAr;
-            int tpsAr;
-
-            f >> nomAr >> posXAr >> posYAr >> tpsAr;
-
-            ar.setLibelle(nomAr);
-            ar.setPotistion(posXAr, posYAr);
-            ar.setTempsArret(tpsAr);
-
-            tabLigne[indice].getListeArret().insererEnQueue(ar);
-        }
-
-        else if(s == "#T")
-        {
-            Tram tr;
-
-            int vitTr;
-            int posXTr;
-            int posYTr;
-            bool sensTr;
-            int numLigneTr;
-
-            f >> vitTr >> posXTr >> posYTr >> sensTr >> numLigneTr;
-
-            if(tr.getSens())	// sens aller
-            {
-                tabLigne[indice].getSensFileAller().entrer(tr);
-            }
-            else
-            {
-                tabLigne[indice].getSensFileRetour().entrer(tr);
-            }
-        }
-
-        else
-        {
-            std::cout << "Erreur de lecture. Code d'erreur 0.";
+            trCrtRetour = trCrtRetour->getTramSuivant();
         }
     }
+}
+
+void reaffichage(const std::vector<Ligne> &tabDeLignes)
+{
+    //cleardevice();
+    afficherReseau(tabDeLignes);
+    afficherTrams(tabDeLignes);
+}
+
+void mouvementsTrams(const std::vector<Ligne> &tabDeLignes)
+{
+    tabDeLignes[0].getSensFileAller().getPremierTram()->avance();
+    reaffichage(tabDeLignes);
+}
 
 
-}*/
 
 /*void afficherReseau(const std::vector<Ligne> &tabLigne)
 {
@@ -245,35 +235,30 @@ int main() {
 
     std::string nomDeMonFichierDeTypeCsv = "structureFichier.txt";
     lire(nomDeMonFichierDeTypeCsv, tabDeLignes);
+    testAfficherLigne(tabDeLignes);
 
+    opengraphsize(800, 500);
 
-   /* opengraphsize(800, 500);
-
-    //------------------- test
-    //std::cout << "Taille de tabDeLignes : " << tabDeLignes.size() << std::endl;
-
-    // ----------------------
-
-    setcolor(RED);
-    afficherReseau(tabDeLignes);
-
-    // ------ déplacer un tram ---------
-    int compteur = 20;
-    Tram tr;
-    tr.posx = 50;
-    tr.posy = 50;
-
-    while(compteur > 0)
+    int compteur = 0;
+    while(compteur != 100)
     {
-        deplacementTram(tr);
-        --compteur;
+        setcolor(RED);
+        afficherReseau(tabDeLignes);
+        setcolor(GREEN);
+        afficherTrams(tabDeLignes);
+        mouvementsTrams(tabDeLignes);
+
+        Sleep(100);
+        ++compteur;
     }
 
+
     getch();
-    closegraph();*/
+    closegraph();
 
 
 
     std::cout << "Hello, World!" << std::endl;
+
     return 0;
 }

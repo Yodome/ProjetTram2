@@ -5,9 +5,9 @@
 #include "..\Headers\Tram.h"
 #include <cmath>
 
-Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{}, d_distanceMin{ 100 },
+Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 0 }, d_distanceMin{ 100 },
 d_vitesseMax{ 20 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
-d_numLigne{ 0 }
+d_numLigne{ 0 }, d_numArretSuiv { 0 }
 {
 
 }
@@ -50,14 +50,19 @@ Position Tram::getPosition()
 	return d_position;
 }
 
-Tram &Tram::getTramSuivant() const
+Tram *Tram::getTramSuivant() const
 {
-	return *d_tramSuiv;
+	return d_tramSuiv;
 }
 
-Arret &Tram::getArretSuivant() const
+Arret *Tram::getArretSuivant() const
 {
-	return *d_arretSuiv;
+	return d_arretSuiv;
+}
+
+int Tram::getNumArretSuivant() const
+{
+    return d_numArretSuiv;
 }
 
 //--------------------------------- SETTER -------------------------------
@@ -103,7 +108,12 @@ void Tram::setTramSuivant(Tram &tramSuivant)
 
 void Tram::setArretSuivant(Arret &arretSuivant)
 {
-	*d_arretSuiv = arretSuivant;
+	d_arretSuiv = &arretSuivant;
+}
+
+void Tram::setNumArretSuivant(int numArretSuivant)
+{
+    d_numArretSuiv = numArretSuivant;
 }
 
 double Tram::distanceTramDevant() const
@@ -111,6 +121,12 @@ double Tram::distanceTramDevant() const
 	return sqrt(pow( (d_tramSuiv->d_position.getX() - d_position.getX()), 2) + pow((d_tramSuiv->d_position.getY() - d_position.getY()), 2));
 }
 
+
+/**
+ * Calcule la distance entre le tram et l'arrêt suivant
+ *
+ * @return
+ */
 double Tram::distanceArretSuiv() const
 {
 	return sqrt(pow(d_arretSuiv->getPosition().getX() - d_position.getX(), 2) + pow(d_arretSuiv->getPosition().getY() - d_position.getY(), 2));
@@ -124,12 +140,17 @@ void Tram::avance()
 	double ds = distanceArretSuiv();
 
 	// distance de l'arr�t selon la future position du tram
-	double dt = ds - d_vitesse;
+
+	double dt = dt - d_vitesse;
 
 	double a = dt / ds;
 
-	d_position.setPos(static_cast<int>((1 - a)*d_position.getX() - a * d_arretSuiv->getPosition().getX()),
-						static_cast<int>((1 - a)*d_position.getY() - a * d_arretSuiv->getPosition().getY()));
+
+
+
+	d_position.setPos(static_cast<int>(std::abs(static_cast<int>((1 - a) * d_position.getX() - a * d_arretSuiv->getPosition().getX()))),
+                      static_cast<int>(std::abs(static_cast<int>((1 - a) * d_position.getY() - a * d_arretSuiv->getPosition().getY()))));
+
 }
 
 bool Tram::doitSArreter()

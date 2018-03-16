@@ -23,8 +23,9 @@ public:
 	int getDistanceMin() const;
 	int getNumLigne() const;
 	Position getPosition();
-	Tram& getTramSuivant() const;
-	Arret& getArretSuivant() const;
+	Tram* getTramSuivant() const;
+	Arret* getArretSuivant() const;
+    int getNumArretSuivant() const;
 
 	//setter
 	void setVitesse(bool vitesse);
@@ -36,11 +37,12 @@ public:
 	void setPosition(int x, int y);
 	void setTramSuivant(Tram& tramSuivant);
 	void setArretSuivant(Arret& arretSuivant);
+    void setNumArretSuivant (int numArretSuivant);
 
-	void avance();	// détermine la position du tram selon sa vitesse
+	void avance();	// dï¿½termine la position du tram selon sa vitesse
 	double distanceTramDevant() const;
 	double distanceArretSuiv() const;
-	bool doitSArreter();	// indique si le tram doit s'arrêter (ne procède à aucun changement des coordonnées du tram)
+	bool doitSArreter();	// indique si le tram doit s'arrï¿½ter (ne procï¿½de ï¿½ aucun changement des coordonnï¿½es du tram)
 	void arret();
 
 	friend class File;
@@ -51,6 +53,7 @@ private:
 	int d_tempsArret;
 	int d_distanceMin;
 	int d_numLigne;
+	int d_numArretSuiv;
 	Position d_position;
 	Tram *d_tramSuiv;
 	Arret *d_arretSuiv;//friend, on veut juste avoir le prochain

@@ -30,6 +30,24 @@ Liste::Liste(Liste & l)
 	}
 }
 
+Liste::~Liste()
+{
+    Arret * crt = getTeteArret()->d_arretSuiv;
+
+    while(crt != 0)
+    {
+        if(crt->d_arretSuiv == 0)
+        {
+            delete crt;
+        }
+        else
+        {
+            delete crt->d_arretPrec;
+            crt = crt->d_arretSuiv;
+        }
+    }
+}
+
 Arret * Liste::getTeteArret() const
 {
 	return d_arretTete;
@@ -77,4 +95,16 @@ bool Liste::estVide() const
 int Liste::getTaille() const
 {
     return  d_taille;
+}
+
+Arret *Liste::getArret(int n) const
+{
+    Arret * crt = getTeteArret();
+
+    while(crt != 0 && crt->getIdArret() != n)
+    {
+        crt = crt->getArretSuivant();
+    }
+
+    return crt;
 }
