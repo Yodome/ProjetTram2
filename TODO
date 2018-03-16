@@ -17,7 +17,7 @@ Ligne :
 CSV :
   - definir les informations à stocker et l'oganisation de ces informations
   - Arret ( nom ; posx ; posy ; tpsArret )
-  - Tram ( vitesse ; posx ; posy ; sens ; numLigne )
+  - Tram ( vitesse ; posx ; posy ; sens ; numLigne ; numArretSuiv)
   - Ligne ( #L 1)
   - # : création d'un objet
       - L : créer une ligne
