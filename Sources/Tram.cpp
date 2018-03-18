@@ -236,8 +236,8 @@ void Tram::avance()
 
 
 
-	d_position.setPos(static_cast<int>(std::abs(static_cast<int>((1 - a) * d_position.getX() - a * d_arretSuiv->getPosition().getX()))),
-                      static_cast<int>(std::abs(static_cast<int>((1 - a) * d_position.getY() - a * d_arretSuiv->getPosition().getY()))));
+	d_position.setPos((static_cast<int>((1 - a) * d_position.getX() - a * d_arretSuiv->getPosition().getX())),
+                      (static_cast<int>((1 - a) * d_position.getY() - a * d_arretSuiv->getPosition().getY())));
 
 }
 

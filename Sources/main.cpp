@@ -129,8 +129,8 @@ void testAfficherLigne(std::vector<Ligne> &tabLigne)
     std::cout << "Trams : " << std::endl;
 
     Tram* tramCourant = new Tram();     //On crée un tram courant pour pouvoir parcourir la file de trams
-    tramCourant = tabLigne[indice].getSensFileAller().getPremierTram(); //tramCourant = premier tram (tête)
-    for(int i = 0; i < tabLigne[indice].getSensFileAller().getTaille(); i++)    //Pour i allant de la tête au dernier tram
+    tramCourant = tabLigne[indice].getSensFileRetour().getPremierTram(); //tramCourant = premier tram (tête)
+    for(int i = 0; i < tabLigne[indice].getSensFileRetour().getTaille(); i++)    //Pour i allant de la tête au dernier tram
     {
 
 
@@ -147,6 +147,7 @@ void testAfficherLigne(std::vector<Ligne> &tabLigne)
 
 void afficherReseau(const std::vector<Ligne> &tabDeLignes)
 {
+    setcolor(RED);
     for(int i = 0; i < tabDeLignes.size(); i++)     // Pour i allant de la première ligne à la dernière
     {
         Arret * arCrt = tabDeLignes[i].getListeArret().getTeteArret();  //On crée un arrêt courant = tête arrêt
@@ -170,6 +171,7 @@ void afficherReseau(const std::vector<Ligne> &tabDeLignes)
 
 void afficherTrams(const std::vector<Ligne> &tabDeLignes)
 {
+    setcolor(GREEN);
     for(int i = 0; i < tabDeLignes.size(); i++) //Pour i allant de la première ligne à la dernière
     {
         Tram * trCrtAller = tabDeLignes[i].getSensFileAller().getPremierTram(); //On crée un tram courant pour le sens aller = tête tram aller 
@@ -200,34 +202,9 @@ void reaffichage(const std::vector<Ligne> &tabDeLignes)
 
 void mouvementsTrams(const std::vector<Ligne> &tabDeLignes)
 {
-    tabDeLignes[0].getSensFileAller().getPremierTram()->avance();
+    tabDeLignes[0].getSensFileRetour().getPremierTram()->avance();
     reaffichage(tabDeLignes);
 }
-
-
-
-/*void afficherReseau(const std::vector<Ligne> &tabLigne)
-{
-    for(int i = 0; i < tabLigne.size(); i++)
-    {
-        bar(tabLigne[i].arrets[0].posx-5, tabLigne[i].arrets[0].posy-5, tabLigne[i].arrets[0].posx+5, tabLigne[i].arrets[0].posy+5);
-
-        for(int j = 1; j < tabLigne[i].arrets.size(); j++)
-        {
-            Arret arPrec = tabLigne[i].arrets[j-1];
-            Arret arSuiv = tabLigne[i].arrets[j];
-
-            line(arPrec.posx, arPrec.posy, arSuiv.posx, arSuiv.posy);
-
-            bar(arSuiv.posx-5, arSuiv.posy-5, arSuiv.posx+5, arSuiv.posy+5);
-            *//*
-            std::cout << "arPrec x : " << arPrec.posx;
-            std::cout << std::endl;
-            std::cout << "arSuiv y : " << arSuiv.posy;
-            *//*
-        }
-    }
-}*/
 
 int main() {
 
@@ -239,17 +216,18 @@ int main() {
 
     opengraphsize(800, 500);
 
-    int compteur = 0;
-    while(compteur != 100)
+
+    int compteur = 100;
+    while(compteur > 0)
     {
-        setcolor(RED);
+        //setcolor(RED);
         afficherReseau(tabDeLignes);
-        setcolor(GREEN);
+        //setcolor(GREEN);
         afficherTrams(tabDeLignes);
         mouvementsTrams(tabDeLignes);
 
-        Sleep(100);
-        ++compteur;
+        --compteur;
+        Sleep(20);
     }
 
 
