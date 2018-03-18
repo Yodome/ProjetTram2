@@ -32,4 +32,18 @@ Faire une méthode size() pour Liste et File (afin de se faciliter la vie quand 
 (10/03)
 Dans le fichier .txt, ajouter le numéro de l'arrêt suivant pour les trams
   
-
+-----------------------------------------------------------------------------------
+(18/03)
+MODIFIER LA METHODE AVANCE() :
+  double dt = dt - vitesse;
+  --> dt n'est pas initialisé. Le compilateur le met par défaut à 0, donc dt est toujours égale à 0. Ce qui est fondamentalement faux.
+  et ds prend la valeur de la distance actuelle entre le tram et l'arrêt suivant : C'EST PAS JUSTE
+  
+  Explications : 
+  ds prend comme valeur la distance entre la position de DEPART du tram et l'arrêt suivant.
+  dt prend comme valeur la distance entre la position ACTUELLE du tram et l'arrêt suivant.
+  
+  ==> il faut trouver une solution pour résoudre ce problème et le déplacement du tram sera juste.
+  
+  
+DEBOGUER le fait qu'on ne puisse pas mettre plusieurs trams dans le fichiers
