@@ -4,35 +4,60 @@
 
 #include "..\Headers\File.h"
 
+/**
+ * Constructeur par défaut : initialise une file vide, de taille 0 avec premier et dernier tram pointant sur NULL
+ */
 File::File() : d_taille{0}, d_premierTram{ nullptr }, d_dernierTram{ nullptr }
 {}
 
+/**
+ * Destructeur de la file : fait sortir tous les trams
+ */
 File::~File()
 {
 	while (d_premierTram) sortir();
 }
 
+/**
+ * Retourne le premier tram de la file
+ * @return le premier tram de la file
+ */
 Tram * File::getPremierTram() const
 {
 	return d_premierTram;
 }
 
+/**
+ * Retourne le dernier tram de la file
+ * @return le dernier tram de la file
+ */
 Tram * File::getDernierTram() const
 {
 	return d_dernierTram;
 }
 
-
+/**
+ * Met premierTram en tant que premier tram de la file
+ * @param premierTram - premier tram de la file après application de la méthode
+ */
 void File::setPremierTram(Tram &premierTram)
 {
 	*d_premierTram = premierTram;
 }
 
+/**
+ * Met dernierTram en tant que dernier tram de la file
+ * @param dernierTram - dernier tram de la file après application de la méthode
+ */
 void File::setDernierTram(Tram &dernierTram)
 {
 	*d_dernierTram = dernierTram;
 }
 
+/**
+ * Fait entrer un tram dans la file. Il devient instantanément le dernier tram de la file
+ * @param tr - tram à faire entrer dans la file
+ */
 void File::entrer(Tram &tr)
 {
 	if (this->estVide())
@@ -49,6 +74,10 @@ void File::entrer(Tram &tr)
 	d_taille++;
 }
 
+/**
+ * Fait sortir le premier tram de la file
+ * @return un objet Tram prenant les valeurs du premier tram de la file
+ */
 Tram& File::sortir()
 {
 	Tram *tr = new Tram();
@@ -73,11 +102,19 @@ Tram& File::sortir()
 	return *tr;
 }
 
+/**
+ * Indique si la file est vide
+ * @return vrai si la file est vide, faux sinon
+ */
 bool File::estVide() const
 {
 	return (d_premierTram == nullptr);
 }
 
+/**
+ * Renvoie le nombre de trams de la file (sa taille)
+ * @return entier indiquant la taille de la file
+ */
 int File::getTaille() const {
 	return d_taille;
 }
