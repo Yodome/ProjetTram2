@@ -12,23 +12,23 @@
 class Liste
 {
 public:
-	Liste();
+	Liste();	//Constructeur par défaut
 	Liste(Liste &l);	// constructeur par recopie
-	~Liste();
-	Arret * getTeteArret() const;
-	Arret * getQueueArret() const;
-    Arret * getArret(int n) const;
-	void setTeteArret(Arret& arretTete);
-	void setQueueArret(Arret& arretQueue);
-	void insererEnQueue(Arret& ar);
-    int getTaille() const;
-    bool estVide() const;
+	~Liste();	//Destructeur
+	Arret * getTeteArret() const;	//Renvoie un pointeur d'arrêt correspondant à la tête de la liste d'arrêts (premier arrêt)
+	Arret * getQueueArret() const;	//Renvoie un pointeur d'arrêt correspondant à la queue de la liste d'arrêts (dernier arrêt)
+    Arret * getArret(int n) const;	//Renvoie un pointeur d'arrêt correpondant à un arrêt de la liste désigné par son numéro n
+	void setTeteArret(Arret& arretTete);	//Modifier la tête de la liste d'arrêts
+	void setQueueArret(Arret& arretQueue);	//Modifier la queue de la liste d'arrêts
+	void insererEnQueue(Arret& ar);		//Insère un arrêt en queue de liste
+    int getTaille() const;	//Renvoie la taille de la liste d'arrêts
+    bool estVide() const;	//Renvoie vrai si la liste d'arrêts est vide
 
 
 private:
-    int d_taille;
-	Arret * d_arretTete;
-	Arret *d_arretQueue;
+    int d_taille;	//Variable qui contient la taille de la liste d'arrêts
+	Arret * d_arretTete;	//Pointeur sur arrêt sur la tête de la liste
+	Arret *d_arretQueue;	//Pointeur sur arrêt sur la queue de la liste
 
 };
 
