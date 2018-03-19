@@ -8,7 +8,7 @@
  * Constructeur par défaut initialisant un tram
  */
 Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 0 }, d_distanceMin{ 100 },
-d_vitesseMax{ 20 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
+d_vitesseMax{ 2 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
 d_numLigne{ 0 }, d_numArretSuiv { 0 }
 {
 
@@ -222,33 +222,66 @@ double Tram::distanceArretSuiv() const
  */
 void Tram::avance()
 {
+    double ds;
 	Position posArretSuiv = d_arretSuiv->getPosition();
 
+    if(getSens())
+    {
+        ds=d_arretSuiv->getArretSuivant()->distanceArretPrecedent();
+    }
+    else
+    {
+        ds=d_arretSuiv->getArretPrecedent()->distanceArretSuivant();
+    }
+
 	// distance � l'arret suivant
-	double ds = distanceArretSuiv();
+	double dt = distanceArretSuiv();
 
 	// distance de l'arr�t selon la future position du tram
 
-	double dt = dt - d_vitesse;
+	dt = dt - d_vitesseMax;
 
-	double a = dt / ds;
-
-
+	double a = (ds-dt) / ds;
 
 
-	d_position.setPos((static_cast<int>((1 - a) * d_position.getX() - a * d_arretSuiv->getPosition().getX())),
-                      (static_cast<int>((1 - a) * d_position.getY() - a * d_arretSuiv->getPosition().getY())));
+
+
+	d_position.setPos((static_cast<int>((1 - a) * d_position.getX() + a * d_arretSuiv->getPosition().getX())),
+                      (static_cast<int>((1 - a) * d_position.getY() + a * d_arretSuiv->getPosition().getY())));
+
+    if(getPosition().getX() == d_arretSuiv->getPosition().getX() &&
+       getPosition().getY() == d_arretSuiv->getPosition().getY() &&
+       d_arretSuiv->getArretSuivant() != 0 )
+    {
+        d_arretSuiv = d_arretSuiv->getArretSuivant();
+    }
+
+    if(getPosition().getX() == d_arretSuiv->getPosition().getX() &&
+       getPosition().getY() == d_arretSuiv->getPosition().getY() &&
+       d_arretSuiv->getArretSuivant() != 0 )
+    {
+        d_arretSuiv = d_arretSuiv->getArretSuivant();
+    }
+
+
 
 }
 
 /**
  * Indique si le tram doit s'arrêter
- * @return vrai si le tram doit s'arrêter, faux sinon
+ * @return un entier correspondant à la raison pour laquelle le tram doit s'arrêté
  */
-bool Tram::doitSArreter()
+int Tram::doitSArreter()
 {
-	return distanceTramDevant() <= d_distanceMin;
+	if(distanceTramDevant() <= d_distanceMin)
+        return 1;
+    else if(distanceArretSuiv()==0)
+        return 2;
+    else
+        return -1;
 }
+
+
 
 /**
  * Permet de stopper le tram courant : met sa vitesse à nulle

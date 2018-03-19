@@ -26,10 +26,10 @@ public:
 	Liste& getListeArret() const;
 
     // Renvoie la file de tram dans le sens aller
-	File& getSensFileAller() const;
+	File& getFileAller() const;
 
     // Renvoie la file de tram dans le sens retour
-	File& getSensFileRetour() const;
+	File& getFileRetour() const;
 
 
     //------------------- SETTER ---------------------
@@ -44,6 +44,9 @@ public:
 
     // Modifie la file de tram du retour
 	void setSensFileRetour(File *sensFileRetour);
+
+	//Change un tram de file sur une même ligne
+	void changerFile(Tram &tr);
 
 private:
 	int d_num; // numéro de la ligne

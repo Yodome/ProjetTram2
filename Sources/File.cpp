@@ -118,3 +118,4 @@ bool File::estVide() const
 int File::getTaille() const {
 	return d_taille;
 }
+

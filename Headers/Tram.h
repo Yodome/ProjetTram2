@@ -68,7 +68,7 @@ public:
 	// Renvoie la distance avec arretSuivant
 	double distanceArretSuiv() const;
 	// Indique si le tram doit s'arr�ter (ne proc�de � aucun changement des coordonn�es du tram)
-	bool doitSArreter();
+	int doitSArreter();
 	// Met le tram courant à l'arrêt : sa vitesse devient nulle
 	void arret();
 

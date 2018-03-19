@@ -3,6 +3,7 @@
 //
 
 #include "..\Headers\Arret.h"
+#include <cmath>
 
 
 /**
@@ -119,5 +120,15 @@ void Arret::setTempsArret(int temps)
 void Arret::setIdArret(int id)
 {
     d_idArret = id;
+}
+
+double Arret::distanceArretSuivant() const
+{
+    return sqrt(pow(d_arretSuiv->getPosition().getX() - d_position.getX(), 2) + pow(d_arretSuiv->getPosition().getY() - d_position.getY(), 2));
+}
+
+double Arret::distanceArretPrecedent() const
+{
+    return sqrt(pow(d_arretPrec->getPosition().getX() - d_position.getX(), 2) + pow(d_arretPrec->getPosition().getY() - d_position.getY(), 2));
 }
 

@@ -54,6 +54,10 @@ public:
     void setIdArret(int id);
 
 
+    double distanceArretSuivant() const;
+    double distanceArretPrecedent() const;
+
+
 	friend class Liste;
 private:
     int d_idArret; // numéro de l'arrêt

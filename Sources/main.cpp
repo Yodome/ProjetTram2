@@ -68,7 +68,7 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
         }
         else if(s == "#T")  //Sinon si le début de la ligne commence par #T (donc un tram)
         {
-            Tram *tr = new Tram;    //On crée un nouveau tram
+            Tram *tr = new Tram();    //On crée un nouveau tram
 
             bool vitTr;     //On initialise chaque variable pour récupérer les infos
             int posXTr;
@@ -89,11 +89,11 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
 
             if(tr->getSens())	// Si le sens est true alors sens aller
             {
-                tabLigne[indice].getSensFileAller().entrer(*tr);
+                tabLigne[indice].getFileAller().entrer(*tr);
             }
             else    //Sinon sens retour
             {
-                tabLigne[indice].getSensFileRetour().entrer(*tr);
+                tabLigne[indice].getFileRetour().entrer(*tr);
             }
         }
         else    //Si on ne tombe sur aucun des cas précédents alors erreur
@@ -129,8 +129,8 @@ void testAfficherLigne(std::vector<Ligne> &tabLigne)
     std::cout << "Trams : " << std::endl;
 
     Tram* tramCourant = new Tram();     //On crée un tram courant pour pouvoir parcourir la file de trams
-    tramCourant = tabLigne[indice].getSensFileRetour().getPremierTram(); //tramCourant = premier tram (tête)
-    for(int i = 0; i < tabLigne[indice].getSensFileRetour().getTaille(); i++)    //Pour i allant de la tête au dernier tram
+    tramCourant = tabLigne[indice].getFileRetour().getPremierTram(); //tramCourant = premier tram (tête)
+    for(int i = 0; i < tabLigne[indice].getFileRetour().getTaille(); i++)    //Pour i allant de la tête au dernier tram
     {
 
 
@@ -174,17 +174,17 @@ void afficherTrams(const std::vector<Ligne> &tabDeLignes)
     setcolor(GREEN);
     for(int i = 0; i < tabDeLignes.size(); i++) //Pour i allant de la première ligne à la dernière
     {
-        Tram * trCrtAller = tabDeLignes[i].getSensFileAller().getPremierTram(); //On crée un tram courant pour le sens aller = tête tram aller 
-        Tram * trCrtRetour = tabDeLignes[i].getSensFileRetour().getPremierTram();   //On crée un tram courant pour le sens retour = tête tram retour
+        Tram * trCrtAller = tabDeLignes[i].getFileAller().getPremierTram(); //On crée un tram courant pour le sens aller = tête tram aller
+        Tram * trCrtRetour = tabDeLignes[i].getFileRetour().getPremierTram();   //On crée un tram courant pour le sens retour = tête tram retour
 
-        for(int j = 0; j < tabDeLignes[i].getSensFileAller().getTaille(); j++)  //Pour j allant du premier tram de la file aller au dernier
+        for(int j = 0; j < tabDeLignes[i].getFileAller().getTaille(); j++)  //Pour j allant du premier tram de la file aller au dernier
         {
             circle(trCrtAller->getPosition().getX(), trCrtAller->getPosition().getY(), 10); //On dessine un cercle de rayon 10 pour le représenter et on le place à la bonne position
 
             trCrtAller = trCrtAller->getTramSuivant();  //On passe au tram suivant
         }
 
-        for(int j = 0; j < tabDeLignes[i].getSensFileRetour().getTaille(); j++) //Pour j allant du premier tram de la file retour au dernier
+        for(int j = 0; j < tabDeLignes[i].getFileRetour().getTaille(); j++) //Pour j allant du premier tram de la file retour au dernier
         {
             circle(trCrtRetour->getPosition().getX(), trCrtRetour->getPosition().getY(), 10);   //On dessine un cercle de rayon 10 et on le place à la bonne position
 
@@ -195,16 +195,47 @@ void afficherTrams(const std::vector<Ligne> &tabDeLignes)
 
 void reaffichage(const std::vector<Ligne> &tabDeLignes)
 {
-    //cleardevice();
+    cleardevice();
     afficherReseau(tabDeLignes);
     afficherTrams(tabDeLignes);
 }
 
-void mouvementsTrams(const std::vector<Ligne> &tabDeLignes)
+void mouvementsTrams(std::vector<Ligne> &tabDeLignes)
 {
-    tabDeLignes[0].getSensFileRetour().getPremierTram()->avance();
+    if(!tabDeLignes[0].getFileAller().estVide())
+    {
+        tabDeLignes[0].getFileAller().getPremierTram()->avance();
+    }
+    if(!tabDeLignes[0].getFileRetour().estVide())
+    {
+        tabDeLignes[0].getFileRetour().getPremierTram()->avance();
+    }
+    if(!tabDeLignes[0].getFileAller().estVide())
+    {
+        if(tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getX() ==
+           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
+           tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getY() ==
+           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getY())
+        {
+            Tram *tr=tabDeLignes[0].getFileAller().getPremierTram();
+            tabDeLignes[0].changerFile(*tr);
+        }
+    }
+    if(!tabDeLignes[0].getFileRetour().estVide())
+    {
+        if(tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getX() ==
+           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
+           tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getY() ==
+           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getY())
+        {
+            Tram *tr=tabDeLignes[0].getFileRetour().getPremierTram();
+            tabDeLignes[0].changerFile(*tr);
+        }
+    }
     reaffichage(tabDeLignes);
 }
+
+
 
 int main() {
 

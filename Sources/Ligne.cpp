@@ -38,7 +38,7 @@ Liste &Ligne::getListeArret() const
  * Renvoie la file de tram dans le sens aller
  * @return d_fileSensAller - file de tram du sens aller
  */
-File &Ligne::getSensFileAller() const
+File &Ligne::getFileAller() const
 {
 	return *d_fileSensAller;
 }
@@ -47,7 +47,7 @@ File &Ligne::getSensFileAller() const
  * Renvoie la file de tram dans le sens retour
  * @return d_fileSensRetour - file de tram du sens retour
  */
-File &Ligne::getSensFileRetour() const
+File &Ligne::getFileRetour() const
 {
 	return *d_fileSensRetour;
 }
@@ -84,4 +84,15 @@ void Ligne::setSensFileAller(File *sensFileAller) {
  */
 void Ligne::setSensFileRetour(File *sensFileRetour) {
 	d_fileSensRetour = sensFileRetour;
+}
+
+void Ligne::changerFile(Tram &tr) {
+	if(tr.getSens())
+	{
+		getFileRetour().entrer(getFileAller().sortir());
+	}
+	if(!tr.getSens())
+	{
+		getFileAller().entrer(getFileRetour().sortir());
+	}
 }
