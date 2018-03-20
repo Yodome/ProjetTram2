@@ -4,9 +4,16 @@
 
 #include "..\Headers\Liste.h"
 
+/**
+ * Constructeur de liste par défaut : avec une taille de 0, la tête de l'arrêt qui pointe sur NULL et la queue de l'arrêt qui pointe sur NULL
+ */
 Liste::Liste() : d_taille{0}, d_arretTete{ nullptr }, d_arretQueue{ nullptr }   //Initialisation des variables privées par défaut (liste vide donc = 0 et pas de tete ni de queue)
 {}
 
+/**
+ * Constructeur de ligne avec des paramètres
+ * @param [in] num - numéro de la ligne
+ */
 Liste::Liste(Liste & l) //Constructeur par recopie
 {
 	Arret *a2 = l.d_arretTete, *prec1 = 0, *a1 = 0;    //On crée un arrêt a2 qui va nous permettre de parcourir la liste passée en paramètre sans perdre la tête,
@@ -31,6 +38,9 @@ Liste::Liste(Liste & l) //Constructeur par recopie
 	}
 }
 
+/**
+ * Destructeur de la liste
+ */
 Liste::~Liste()     //Destructeur
 {
     Arret * crt = getTeteArret()->d_arretSuiv;  //On crée un arrêt courant
@@ -49,21 +59,37 @@ Liste::~Liste()     //Destructeur
     }
 }
 
+/**
+ * Renvoie un pointeur sur l'arrêt en tête de la liste
+ * @return pointeur sur arrêt en tête de la liste
+ */
 Arret * Liste::getTeteArret() const
 {
-	return d_arretTete;    //Retourne l'arrêt de tête
+	return d_arretTete;    //Retourne l'arrêt en tête de liste
 }
 
+/**
+ * Renvoie un pointeur sur l'arrêt en queue de la liste
+ * @return pointeur sur arrêt en queue de la liste
+ */
 Arret * Liste::getQueueArret() const
 {
 	return d_arretQueue;   //Retourne l'arrêt de queue
 }
 
+/**
+ * Modifie l'arrêt en tête de liste par celui passé en paramètre
+ * @param [in] arretTete - arrêt qui devient la tête de la liste
+ */
 void Liste::setTeteArret(Arret &arretTete)
 {
 	*d_arretTete = arretTete;  //Modifie l'arrêt de tête par celui passé en paramètre
 }
 
+/**
+ * Modifie l'arrêt en queue de liste par celui passé en paramètre
+ * @param [in] arretQueue - arrêt qui devient la queue de la liste
+ */
 void Liste::setQueueArret(Arret &arretQueue)
 {
     arretQueue.d_arretPrec = d_arretQueue; //Le précédent de l'arrêt passé en paramètre pointe vers la queue de la liste
@@ -72,7 +98,10 @@ void Liste::setQueueArret(Arret &arretQueue)
     d_arretQueue = &arretQueue; //La nouvelle queue devient celle passée en paramètre
 }
 
-// A refaire (�a fait des erreurs)
+/**
+ * Insère un arrêt en queue de liste
+ * @param [in] ar - arrêt qui est inséré en queue de la liste
+ */
 void Liste::insererEnQueue(Arret& ar) // ajouter les exceptions
 {
     if (this->estVide())    //Si la liste d'arrêts courant est vide
@@ -88,16 +117,29 @@ void Liste::insererEnQueue(Arret& ar) // ajouter les exceptions
     d_taille++;     //On incrémente la taille de la liste d'arrêts
 }
 
+/**
+ * Renvoie vrai ou faux si la liste est vide ou non
+ * @return vrai si la liste est vide, faux sinon
+ */
 bool Liste::estVide() const
 {
     return (d_arretTete == nullptr);    //renvoie vrai si la liste est vide
 }
 
+/**
+ * Renvoie la taille de la liste
+ * @return entier correspondant à la taille de la liste d'arrêts
+ */
 int Liste::getTaille() const
 {
     return  d_taille;   //Renvoie la taille de la liste d'arrêts
 }
 
+/**
+ * Renvoie un pointeur sur l'arrêt correspondant à son numéro passé en paramètre
+ * @param [in] n - numéro de l'arrêt à retourner
+ * @return pointeur sur arrêt correspondant à l'arrêt identifié par son numéro
+ */
 Arret *Liste::getArret(int n) const     //Renvoie un arrêt en fonction de son numéro
 {
     Arret * crt = getTeteArret();   //On crée un arrêt courant pour parcourir la liste sans perdre la tête

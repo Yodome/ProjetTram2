@@ -15,6 +15,11 @@
 #include "../Headers/Tram.h"
 
 
+/**
+ * Lit un fichier texte et stocke ses données
+ * @param [in] nomFichier - chaine de caractère qui correspond au fichier à lire
+ * @param [in] tabLigne - tableau de lignes
+ */
 void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
 {
     std::ifstream f(nomFichier.c_str());    //Création de la variable du fichier
@@ -106,6 +111,10 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
 
 
 //-------------------------------------- TEST -----------------------------------
+/**
+ * Affichage des informations sous forme textuelle, récoltées depuis le fichier texte et stockées dans les structures
+ * @param [in] tabLigne - tableau de lignes
+ */
 void testAfficherLigne(std::vector<Ligne> &tabLigne)
 {
     int indice = 0;
@@ -121,7 +130,6 @@ void testAfficherLigne(std::vector<Ligne> &tabLigne)
                   << arretCourant->getPosition().getY() << " "
                   << arretCourant->getTempsArret() << std::endl;
 
-//        std::cout << tabLigne[indice].arrets[i].nomArret << " " << tabLigne[indice].arrets[i].posx << " " << tabLigne[indice].arrets[i].posy << " " << tabLigne[indice].arrets[i].tempsArret << std::endl;
         arretCourant = arretCourant->getArretSuivant();     //On passe à l'arrêt suivant
     }
 
@@ -145,6 +153,10 @@ void testAfficherLigne(std::vector<Ligne> &tabLigne)
     indice ++ ;
 }
 
+/**
+ * Affichage des arrêts et des voies qui les relient
+ * @param [in] tabDeLignes - tableau de lignes
+ */
 void afficherReseau(const std::vector<Ligne> &tabDeLignes)
 {
     setcolor(RED);
@@ -169,6 +181,10 @@ void afficherReseau(const std::vector<Ligne> &tabDeLignes)
     }
 }
 
+/**
+ * Affichage des trams sur le réseau
+ * @param [in] tabDeLignes - tableau de lignes
+ */
 void afficherTrams(const std::vector<Ligne> &tabDeLignes)
 {
     setcolor(GREEN);
@@ -193,6 +209,10 @@ void afficherTrams(const std::vector<Ligne> &tabDeLignes)
     }
 }
 
+/**
+ * Efface l'écran et réaffiche le réseau d'arrêts et les trams
+ * @param [in] tabDeLignes - tableau de lignes
+ */
 void reaffichage(const std::vector<Ligne> &tabDeLignes)
 {
     cleardevice();
@@ -200,6 +220,11 @@ void reaffichage(const std::vector<Ligne> &tabDeLignes)
     afficherTrams(tabDeLignes);
 }
 
+/**
+ * Modifie l'arrêt suivant d'un tram
+ * @param [in] tabDeLignes - tableau de lignes
+ * @param [in] tr - tram sur lequel on veut modifier son arrêt suivant
+ */
 void changerArretSuivantTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
 {
     if(tr.getPosition().getX() == tr.getArretSuivant()->getPosition().getX() &&
@@ -237,6 +262,11 @@ void changerArretSuivantTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
     }
 }
 
+/**
+ * Change un tram de file
+ * @param [in] tabDeLignes - tableau de lignes
+ * @param [in] tr - tram qui doit changer de file
+ */
 void changerFileTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
 {
     if(!tabDeLignes[0].getFileAller().estVide()) // si
@@ -266,8 +296,10 @@ void changerFileTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
 
 }
 
-
-
+/**
+ * Fait bouger le tram sur la ligne
+ * @param [in] tabDeLignes - tableau de lignes
+ */
 void mouvementsTrams(std::vector<Ligne> &tabDeLignes)
 {
     if(!tabDeLignes[0].getFileAller().estVide()) // si file aller non vide

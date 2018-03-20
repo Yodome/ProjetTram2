@@ -86,6 +86,10 @@ void Ligne::setSensFileRetour(File *sensFileRetour) {
 	d_fileSensRetour = sensFileRetour;
 }
 
+/**
+ * Modifie la file du tram en fonction de son sens
+ * @param [in] tr - tram qui change de file
+ */
 void Ligne::changerFile(Tram &tr) {
 	if(tr.getSens())
 	{

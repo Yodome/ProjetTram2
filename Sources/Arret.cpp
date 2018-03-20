@@ -48,7 +48,7 @@ int Arret::getTempsArret() const
 }
 
 /**
- * Renvoie le nomde l'arrêt
+ * Renvoie le nom de l'arrêt
  * @return d_libelle - nom de l'arrêt
  */
 std::string Arret::getLibelle() const
@@ -66,7 +66,7 @@ int Arret::getIdArret() const
 }
 
 /**
- * Renvoie l'arrêt se trouvant après l'arrêt actuelle dans la ligne
+ * Renvoie l'arrêt se trouvant après l'arrêt actuel dans la ligne
  * @return d_arretSuiv - arrêt suivant sur la ligne
  */
 Arret *Arret::getArretSuivant() const
@@ -75,7 +75,7 @@ Arret *Arret::getArretSuivant() const
 }
 
 /**
- * Renvoie l'arrêt se trouvant avant l'arrêt actuelle dans la ligne
+ * Renvoie l'arrêt se trouvant avant l'arrêt actuel dans la ligne
  * @return d_arretPrec - arrêt précédent sur la ligne
  */
 Arret *Arret::getArretPrecedent() const
@@ -96,7 +96,7 @@ void Arret::setLibelle(std::string nom)
 
 /**
  * Modifie la position de l'arrêt
- * @param [in]  x - coordonnée en abscisse de l'arrêt
+ * @param [in] x - coordonnée en abscisse de l'arrêt
  * @param [in] y - coordonnée en ordonnée de l'arrêt
  */
 void Arret::setPosition(int x, int y)
@@ -122,11 +122,19 @@ void Arret::setIdArret(int id)
     d_idArret = id;
 }
 
+/**
+ * Renvoie la distance entre l'arrêt actuel et l'arrêt suivant
+ * @return double correspondant à la distance de l'arrêt suivant
+ */
 double Arret::distanceArretSuivant() const
 {
     return sqrt(pow(d_arretSuiv->getPosition().getX() - d_position.getX(), 2) + pow(d_arretSuiv->getPosition().getY() - d_position.getY(), 2));
 }
 
+/**
+ * Renvoie la distance entre l'arrêt actuel et l'arrêt précédent
+ * @return double correspondant à la distance de l'arrêt précédent
+ */
 double Arret::distanceArretPrecedent() const
 {
     return sqrt(pow(d_arretPrec->getPosition().getX() - d_position.getX(), 2) + pow(d_arretPrec->getPosition().getY() - d_position.getY(), 2));

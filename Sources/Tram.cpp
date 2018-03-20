@@ -109,7 +109,7 @@ int Tram::getNumArretSuivant() const
 //--------------------------------- SETTER -------------------------------
 /**
  * Modifie la vitesse actuelle du tram
- * @param vitesse - vitesse que le tram va prendre
+ * @param [in] vitesse - vitesse que le tram va prendre
  */
 void Tram::setVitesse(bool vitesse)
 {
@@ -118,7 +118,7 @@ void Tram::setVitesse(bool vitesse)
 
 /**
  * Modifie la vitesse maximale du tram
- * @param vitesseMax - vitesse maximale que le tram aura
+ * @param [in] vitesseMax - vitesse maximale que le tram aura
  */
 void Tram::setVitessemax(int vitesseMax)
 {
@@ -127,7 +127,7 @@ void Tram::setVitessemax(int vitesseMax)
 
 /**
  * Modifie le sens du tram
- * @param sens - sens que le tram va prendre
+ * @param [in] sens - sens que le tram va prendre
  */
 void Tram::setSens(bool sens)
 {
@@ -136,7 +136,7 @@ void Tram::setSens(bool sens)
 
 /**
  * Modifie le temsp d'arrêt
- * @param tempsArret - valeur du temsp d'arrêt du tram
+ * @param [in] tempsArret - valeur du temsp d'arrêt du tram
  */
 void Tram::setTempsArret(int tempsArret)
 {
@@ -145,7 +145,7 @@ void Tram::setTempsArret(int tempsArret)
 
 /**
  * Modifie la distance minimale que le tram doit respecter
- * @param distanceMin - distance minimale que le tram devra respecter
+ * @param [in] distanceMin - distance minimale que le tram devra respecter
  */
 void Tram::setDistanceMin(int distanceMin)
 {
@@ -154,7 +154,7 @@ void Tram::setDistanceMin(int distanceMin)
 
 /**
  * Modifie le numéro de ligne sur laquelle le tram se déplace
- * @param numLigne - numéro de ligne
+ * @param [in] numLigne - numéro de ligne
  */
 void Tram::setNumLigne(int numLigne)
 {
@@ -163,8 +163,8 @@ void Tram::setNumLigne(int numLigne)
 
 /**
  * Modifie la position du tram
- * @param x - coordonnée x
- * @param y - coordonnée y
+ * @param [in] x - coordonnée x
+ * @param [in] y - coordonnée y
  */
 void Tram::setPosition(int x, int y)
 {
@@ -173,7 +173,7 @@ void Tram::setPosition(int x, int y)
 
 /**
  * Modifie le pointeur sur le tram suivant
- * @param tramSuivant - pointeur sur le tram suivant
+ * @param [in] tramSuivant - pointeur sur le tram suivant
  */
 void Tram::setTramSuivant(Tram &tramSuivant)
 {
@@ -182,7 +182,7 @@ void Tram::setTramSuivant(Tram &tramSuivant)
 
 /**
  * Modifie l'arrêt vers lequel se dirige le tram
- * @param arretSuivant - pointeur sur l'arrêt suivant
+ * @param [in] arretSuivant - pointeur sur l'arrêt suivant
  */
 void Tram::setArretSuivant(Arret &arretSuivant)
 {
@@ -191,7 +191,7 @@ void Tram::setArretSuivant(Arret &arretSuivant)
 
 /**
  * Modifie le numéro du prochain arrêt
- * @param numArretSuivant - numéro du prochain arrêt
+ * @param [in] numArretSuivant - numéro du prochain arrêt
  */
 void Tram::setNumArretSuivant(int numArretSuivant)
 {

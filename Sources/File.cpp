@@ -38,7 +38,7 @@ Tram * File::getDernierTram() const
 
 /**
  * Met premierTram en tant que premier tram de la file
- * @param premierTram - premier tram de la file après application de la méthode
+ * @param [in] premierTram - premier tram de la file après application de la méthode
  */
 void File::setPremierTram(Tram &premierTram)
 {
@@ -47,7 +47,7 @@ void File::setPremierTram(Tram &premierTram)
 
 /**
  * Met dernierTram en tant que dernier tram de la file
- * @param dernierTram - dernier tram de la file après application de la méthode
+ * @param [in] dernierTram - dernier tram de la file après application de la méthode
  */
 void File::setDernierTram(Tram &dernierTram)
 {
@@ -56,7 +56,7 @@ void File::setDernierTram(Tram &dernierTram)
 
 /**
  * Fait entrer un tram dans la file. Il devient instantanément le dernier tram de la file
- * @param tr - tram à faire entrer dans la file
+ * @param [in] tr - tram à faire entrer dans la file
  */
 void File::entrer(Tram &tr)
 {
