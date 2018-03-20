@@ -62,7 +62,7 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
             f >> id >>libelle >> posx >> posy >> tempsArret; //On récupères les infos
             ar->setIdArret(id);     //On les stocke dans chaque variable 
             ar->setLibelle(libelle);
-            ar->setPotistion(posx, posy);
+            ar->setPosition(posx, posy);
             ar->setTempsArret(tempsArret);
             tabLigne[indice].getListeArret().insererEnQueue(*ar); // Ajout de l'arret en queue de liste
         }
@@ -200,17 +200,46 @@ void reaffichage(const std::vector<Ligne> &tabDeLignes)
     afficherTrams(tabDeLignes);
 }
 
-void mouvementsTrams(std::vector<Ligne> &tabDeLignes)
+void changerArretSuivantTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
 {
-    if(!tabDeLignes[0].getFileAller().estVide())
+    if(tr.getPosition().getX() == tr.getArretSuivant()->getPosition().getX() &&
+       tr.getPosition().getY() == tr.getArretSuivant()->getPosition().getY() &&
+       tr.getArretSuivant()->getArretSuivant() != 0 &&
+       !tr.getSens())
     {
-        tabDeLignes[0].getFileAller().getPremierTram()->avance();
+        if ( tr.getPosition().getX() == tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getX() &&
+                tr.getPosition().getY() == tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getY())
+        {
+            tr.setArretSuivant(*tr.getArretSuivant()->getArretPrecedent());
+        }
+        else
+        {
+            tr.setArretSuivant(*tr.getArretSuivant()->getArretSuivant());
+        }
+
+
     }
-    if(!tabDeLignes[0].getFileRetour().estVide())
+    else if ( tr.getPosition().getX() == tr.getArretSuivant()->getPosition().getX() &&
+              tr.getPosition().getY() == tr.getArretSuivant()->getPosition().getY() &&
+              tr.getArretSuivant()->getArretSuivant() != 0 &&
+              tr.getSens())
     {
-        tabDeLignes[0].getFileRetour().getPremierTram()->avance();
+        if ( tr.getPosition().getX() == tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
+                tr.getPosition().getY() == tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getY())
+        {
+            tr.setArretSuivant(*tr.getArretSuivant()->getArretSuivant());
+        }
+        else
+        {
+            tr.setArretSuivant(*tr.getArretSuivant()->getArretPrecedent());
+        }
+
     }
-    if(!tabDeLignes[0].getFileAller().estVide())
+}
+
+void changerFileTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
+{
+    if(!tabDeLignes[0].getFileAller().estVide()) // si
     {
         if(tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getX() ==
            tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
@@ -219,21 +248,50 @@ void mouvementsTrams(std::vector<Ligne> &tabDeLignes)
         {
             Tram *tr=tabDeLignes[0].getFileAller().getPremierTram();
             tabDeLignes[0].changerFile(*tr);
+
         }
     }
     if(!tabDeLignes[0].getFileRetour().estVide())
     {
         if(tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getX() ==
-           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
+           tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getX() &&
            tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getY() ==
-           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getY())
+           tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getY())
         {
             Tram *tr=tabDeLignes[0].getFileRetour().getPremierTram();
             tabDeLignes[0].changerFile(*tr);
+
         }
     }
+
+}
+
+
+
+void mouvementsTrams(std::vector<Ligne> &tabDeLignes)
+{
+    if(!tabDeLignes[0].getFileAller().estVide()) // si file aller non vide
+    {
+        if ( tabDeLignes[0].getFileAller().getPremierTram()->getArretSuivant() == nullptr) // si l'arrêt suivant du premier tram est nul
+        {
+            tabDeLignes[0].getFileAller().getPremierTram()->setArretSuivant(*tabDeLignes[0].getListeArret().getQueueArret()->getArretPrecedent()); // son arrêt suivant est l'arrêt précédent de queue
+        }
+        tabDeLignes[0].getFileAller().getPremierTram()->avance(); // on prend le premier tram de la file
+        changerArretSuivantTram(tabDeLignes,*tabDeLignes[0].getFileAller().getPremierTram()); // actualisation de son arrêt suivant
+        changerFileTram(tabDeLignes,*tabDeLignes[0].getFileAller().getPremierTram()); // on change le tram de file
+    }
+    if(!tabDeLignes[0].getFileRetour().estVide()) // si file retour non vide
+    {
+        tabDeLignes[0].getFileRetour().getPremierTram()->avance(); // on prend le premier tram de la file
+        changerArretSuivantTram(tabDeLignes,*tabDeLignes[0].getFileRetour().getPremierTram());
+        changerFileTram(tabDeLignes,*tabDeLignes[0].getFileRetour().getPremierTram());
+    }
+
+
+
     reaffichage(tabDeLignes);
 }
+
 
 
 
@@ -248,7 +306,7 @@ int main() {
     opengraphsize(800, 500);
 
 
-    int compteur = 100;
+    int compteur = 500;
     while(compteur > 0)
     {
         //setcolor(RED);
@@ -256,6 +314,8 @@ int main() {
         //setcolor(GREEN);
         afficherTrams(tabDeLignes);
         mouvementsTrams(tabDeLignes);
+
+
 
         --compteur;
         Sleep(20);

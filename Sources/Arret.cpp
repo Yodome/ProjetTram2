@@ -99,7 +99,7 @@ void Arret::setLibelle(std::string nom)
  * @param [in]  x - coordonnée en abscisse de l'arrêt
  * @param [in] y - coordonnée en ordonnée de l'arrêt
  */
-void Arret::setPotistion(int x, int y)
+void Arret::setPosition(int x, int y)
 {
 	d_position.setPos(x, y);
 }

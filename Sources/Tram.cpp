@@ -8,7 +8,7 @@
  * Constructeur par défaut initialisant un tram
  */
 Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 0 }, d_distanceMin{ 100 },
-d_vitesseMax{ 2 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
+d_vitesseMax{ 5 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
 d_numLigne{ 0 }, d_numArretSuiv { 0 }
 {
 
@@ -177,7 +177,7 @@ void Tram::setPosition(int x, int y)
  */
 void Tram::setTramSuivant(Tram &tramSuivant)
 {
-	*d_tramSuiv = tramSuivant;
+	d_tramSuiv = &tramSuivant;
 }
 
 /**
@@ -244,25 +244,17 @@ void Tram::avance()
 	double a = (ds-dt) / ds;
 
 
-
-
-	d_position.setPos((static_cast<int>((1 - a) * d_position.getX() + a * d_arretSuiv->getPosition().getX())),
-                      (static_cast<int>((1 - a) * d_position.getY() + a * d_arretSuiv->getPosition().getY())));
-
-    if(getPosition().getX() == d_arretSuiv->getPosition().getX() &&
-       getPosition().getY() == d_arretSuiv->getPosition().getY() &&
-       d_arretSuiv->getArretSuivant() != 0 )
+    if ( dt < 0 )
     {
-        d_arretSuiv = d_arretSuiv->getArretSuivant();
+        d_position.setPos(d_arretSuiv->getPosition().getX(), d_arretSuiv->getPosition().getY());
     }
-
-    if(getPosition().getX() == d_arretSuiv->getPosition().getX() &&
-       getPosition().getY() == d_arretSuiv->getPosition().getY() &&
-       d_arretSuiv->getArretSuivant() != 0 )
+    else
     {
-        d_arretSuiv = d_arretSuiv->getArretSuivant();
+        d_position.setPos((static_cast<int>((1 - a) * d_arretSuiv->getArretPrecedent()->getPosition().getX() +
+                                            a * d_arretSuiv->getPosition().getX())),
+                          (static_cast<int>((1 - a) * d_arretSuiv->getArretPrecedent()->getPosition().getY() +
+                                            a * d_arretSuiv->getPosition().getY())));
     }
-
 
 
 }

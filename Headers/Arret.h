@@ -45,7 +45,7 @@ public:
     void setLibelle(std::string nom);
 
     // Modifie la position de l'arrêt
-    void setPotistion(int x, int y);
+    void setPosition(int x, int y);
 
     // Modifie le temsp d'arret minimum d'un tram sur l'arrêt
     void setTempsArret(int temps);
