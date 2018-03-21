@@ -119,37 +119,41 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
 void testAfficherLigne(std::vector<Ligne> &tabLigne)
 {
     int indice = 0;
-    std::cout << "Arrets : " << std::endl;
-    Arret *arretCourant = new Arret();      //On crée un nouvel arrêt pour pouvoir parcourir la liste d'arrêts sans perdre la tête
-    arretCourant = tabLigne[indice].getListeArret().getTeteArret(); //arretCourant = arret de tête
-    for(int i = 0; i < tabLigne[indice].getListeArret().getTaille(); i++)   //Pour i allant de la tête au dernier arrêt
+    for ( int j =0 ; j < tabLigne.size(); j++)
     {
 
-        std::cout << arretCourant->getIdArret() << " "      //On affiche les informations concernant cet arrêt
-                  << arretCourant->getLibelle() << " "
-                  << arretCourant->getPosition().getX() << " "
-                  << arretCourant->getPosition().getY() << " "
-                  << arretCourant->getTempsArret() << std::endl;
+        std::cout << "Arrets : " << std::endl;
+        Arret *arretCourant = new Arret();      //On crée un nouvel arrêt pour pouvoir parcourir la liste d'arrêts sans perdre la tête
+        arretCourant = tabLigne[j].getListeArret().getTeteArret(); //arretCourant = arret de tête
+        for(int i = 0; i < tabLigne[j].getListeArret().getTaille(); i++)   //Pour i allant de la tête au dernier arrêt
+        {
 
-        arretCourant = arretCourant->getArretSuivant();     //On passe à l'arrêt suivant
-    }
+            std::cout << arretCourant->getIdArret() << " "      //On affiche les informations concernant cet arrêt
+                      << arretCourant->getLibelle() << " "
+                      << arretCourant->getPosition().getX() << " "
+                      << arretCourant->getPosition().getY() << " "
+                      << arretCourant->getTempsArret() << std::endl;
 
-
-    std::cout << "Trams : " << std::endl;
-
-    Tram* tramCourant = new Tram();     //On crée un tram courant pour pouvoir parcourir la file de trams
-    tramCourant = tabLigne[indice].getFileRetour().getPremierTram(); //tramCourant = premier tram (tête)
-    for(int i = 0; i < tabLigne[indice].getFileRetour().getTaille(); i++)    //Pour i allant de la tête au dernier tram
-    {
+            arretCourant = arretCourant->getArretSuivant();     //On passe à l'arrêt suivant
+        }
 
 
-        std::cout << tramCourant->getVitesse() << " "       //On affiche toutes les informations de ce tram
-                  << tramCourant->getPosition().getX() << " "
-                  << tramCourant->getPosition().getY() << " "
-                  << tramCourant->getSens() << " "
-                  << tramCourant->getNumLigne() << " "
-                  << tramCourant->getNumArretSuivant() <<  std::endl;
-        tramCourant = tramCourant->getTramSuivant();    //On passe au tram suivant
+        std::cout << "Trams : " << std::endl;
+
+        Tram* tramCourant = new Tram();     //On crée un tram courant pour pouvoir parcourir la file de trams
+        tramCourant = tabLigne[j].getFileRetour().getPremierTram(); //tramCourant = premier tram (tête)
+        for(int i = 0; i < tabLigne[j].getFileRetour().getTaille(); i++)    //Pour i allant de la tête au dernier tram
+        {
+
+
+            std::cout << tramCourant->getVitesse() << " "       //On affiche toutes les informations de ce tram
+                      << tramCourant->getPosition().getX() << " "
+                      << tramCourant->getPosition().getY() << " "
+                      << tramCourant->getSens() << " "
+                      << tramCourant->getNumLigne() << " "
+                      << tramCourant->getNumArretSuivant() <<  std::endl;
+            tramCourant = tramCourant->getTramSuivant();    //On passe au tram suivant
+        }
     }
     indice ++ ;
 }
