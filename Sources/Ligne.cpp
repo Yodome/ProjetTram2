@@ -100,3 +100,5 @@ void Ligne::changerFile(Tram &tr) {
 		getFileAller().entrer(getFileRetour().sortir());
 	}
 }
+
+

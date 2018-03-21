@@ -222,55 +222,66 @@ double Tram::distanceArretSuiv() const
  */
 void Tram::avance()
 {
-    double ds;
-	Position posArretSuiv = d_arretSuiv->getPosition();
-
-    if(getSens())
+    if(d_vitesse)
     {
-        ds=d_arretSuiv->getArretSuivant()->distanceArretPrecedent();
+        double ds;
+        Position posArretSuiv = d_arretSuiv->getPosition();
+
+        if(getSens())
+        {
+            ds=d_arretSuiv->getArretSuivant()->distanceArretPrecedent();
+        }
+        else
+        {
+            ds=d_arretSuiv->getArretPrecedent()->distanceArretSuivant();
+        }
+
+        // distance � l'arret suivant
+        double dt = distanceArretSuiv();
+
+        // distance de l'arr�t selon la future position du tram
+
+        dt = dt - d_vitesseMax;
+
+        double a = (ds-dt) / ds;
+
+
+        if ( dt < 0 )
+        {
+            d_position.setPos(d_arretSuiv->getPosition().getX(), d_arretSuiv->getPosition().getY());
+        }
+        else
+        {
+            if (!d_sens)
+            {
+
+                d_position.setPos((static_cast<int>((1 - a) * d_arretSuiv->getArretPrecedent()->getPosition().getX() +
+                                                    a * d_arretSuiv->getPosition().getX())),
+                                  (static_cast<int>((1 - a) * d_arretSuiv->getArretPrecedent()->getPosition().getY() +
+                                                    a * d_arretSuiv->getPosition().getY())));
+            }
+            else
+            {
+                d_position.setPos((static_cast<int>((1 - a) * d_arretSuiv->getArretSuivant()->getPosition().getX() +
+                                                    a * d_arretSuiv->getPosition().getX())),
+                                  (static_cast<int>((1 - a) * d_arretSuiv->getArretSuivant()->getPosition().getY() +
+                                                    a * d_arretSuiv->getPosition().getY())));
+            }
+        }
     }
     else
     {
-        ds=d_arretSuiv->getArretPrecedent()->distanceArretSuivant();
+
     }
-
-	// distance � l'arret suivant
-	double dt = distanceArretSuiv();
-
-	// distance de l'arr�t selon la future position du tram
-
-	dt = dt - d_vitesseMax;
-
-	double a = (ds-dt) / ds;
-
-
-    if ( dt < 0 )
-    {
-        d_position.setPos(d_arretSuiv->getPosition().getX(), d_arretSuiv->getPosition().getY());
-    }
-    else
-    {
-        d_position.setPos((static_cast<int>((1 - a) * d_arretSuiv->getArretPrecedent()->getPosition().getX() +
-                                            a * d_arretSuiv->getPosition().getX())),
-                          (static_cast<int>((1 - a) * d_arretSuiv->getArretPrecedent()->getPosition().getY() +
-                                            a * d_arretSuiv->getPosition().getY())));
-    }
-
-
 }
 
 /**
  * Indique si le tram doit s'arrêter
  * @return un entier correspondant à la raison pour laquelle le tram doit s'arrêté
  */
-int Tram::doitSArreter()
+bool Tram::doitSArreter()
 {
-	if(distanceTramDevant() <= d_distanceMin)
-        return 1;
-    else if(distanceArretSuiv()==0)
-        return 2;
-    else
-        return -1;
+    return  (distanceTramDevant() <= d_distanceMin || distanceArretSuiv()==0);
 }
 
 

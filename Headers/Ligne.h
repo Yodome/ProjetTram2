@@ -13,8 +13,6 @@ class Ligne
 {
 
 public:
-    // constructeur par défaut de la ligne
-	Ligne();
     // constructeur de la ligne avec des paramètres
 	Ligne(int num);
 
