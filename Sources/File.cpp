@@ -119,3 +119,14 @@ int File::getTaille() const {
 	return d_taille;
 }
 
+Tram *File::operator[](int n) const {
+    int i = 0;
+    Tram *t1 = d_premierTram;
+    while (t1 != 0 && i < n)
+    {
+        i++;
+        t1 = t1->d_tramSuiv;
+    }
+    return t1;
+}
+

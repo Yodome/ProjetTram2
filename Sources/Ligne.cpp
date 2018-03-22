@@ -95,7 +95,7 @@ void Ligne::changerFile(Tram &tr) {
 	{
 		getFileRetour().entrer(getFileAller().sortir());
 	}
-	if(!tr.getSens())
+    else if(!tr.getSens())
 	{
 		getFileAller().entrer(getFileRetour().sortir());
 	}

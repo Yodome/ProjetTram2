@@ -31,6 +31,8 @@ public:
 	// Retourne vrai si la file est vide --> si tete == queue
 	bool estVide() const;
 
+    Tram* operator[](int n) const;
+
 private:
 	int d_taille;	// taille de la file
 	Tram * d_premierTram;	// pointeur sur le premier tram
