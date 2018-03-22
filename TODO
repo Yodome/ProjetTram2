@@ -52,3 +52,11 @@ DEBOGUER le fait qu'on ne puisse pas mettre plusieurs trams dans le fichiers
 -------------------------------------------------------------------------------------
 (22/03)
 Déboguage effectué
+
+A faire :
+  - destructeur liste
+  - gestion collision tram
+  - pourquoi ça plante à la fin
+  - gestion de plusieur ligne
+  -
+  
