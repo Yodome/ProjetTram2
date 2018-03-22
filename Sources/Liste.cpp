@@ -53,7 +53,8 @@ Liste::~Liste()     //Destructeur
         }
         else    //Sinon
         {
-            delete crt->d_arretPrec;    //On supprime l'arrêt précédent 
+            delete crt->d_arretPrec;    //On supprime l'arrêt précédent
+            setTeteArret(*crt);
             crt = crt->d_arretSuiv;     //On avance l'arrêt courant
         }
     }
@@ -94,7 +95,7 @@ void Liste::setQueueArret(Arret &arretQueue)
 {
     arretQueue.d_arretPrec = d_arretQueue; //Le précédent de l'arrêt passé en paramètre pointe vers la queue de la liste
     d_arretQueue->d_arretSuiv = &arretQueue; // Le suivant de l'ancienne queue devient l'arrêt passé en paramètre
-    arretQueue.d_arretSuiv = 0; //Le suivant de la queue est nul
+    arretQueue.d_arretSuiv = nullptr; //Le suivant de la queue est nul
     d_arretQueue = &arretQueue; //La nouvelle queue devient celle passée en paramètre
 }
 

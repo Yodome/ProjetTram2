@@ -101,4 +101,12 @@ void Ligne::changerFile(Tram &tr) {
 	}
 }
 
+Ligne::~Ligne()
+{
+    d_listeArret->~Liste();
+    d_fileSensAller->~File();
+    d_fileSensRetour->~File();
+
+}
+
 

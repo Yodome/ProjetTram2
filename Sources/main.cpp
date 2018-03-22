@@ -106,8 +106,9 @@ void lire(const std::string &nomFichier, std::vector<Ligne> &tabLigne)
         {
             std::cout << "error";
         }
-
     }
+
+    f.close();
 }
 
 
@@ -276,29 +277,38 @@ void changerArretSuivantTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
  */
 void changerFileTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
 {
-    if(!tabDeLignes[0].getFileAller().estVide()) // si la file aller n'est pas vide
+
+    if (&tr == tabDeLignes[0].getFileAller().getPremierTram() || &tr == tabDeLignes[0].getFileRetour().getPremierTram())
     {
-        if(tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getX() == // le tram se trouve sur l'arrêt tête
-           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
-           tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getY() ==
-           tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getY())
+
+
+        if (!tabDeLignes[0].getFileAller().estVide()) // si la file aller n'est pas vide
         {
-            Tram *tr=tabDeLignes[0].getFileAller().getPremierTram(); // on récupère le premier tram de la file aller
-            tabDeLignes[0].changerFile(*tr); // on le change de file
-            tabDeLignes[0].getFileRetour().getDernierTram()->setSens(!tabDeLignes[0].getFileRetour().getDernierTram()->getSens()); // on actualise le sens du tram
+            if (tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getX() ==
+                // le tram se trouve sur l'arrêt tête
+                tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getX() &&
+                tabDeLignes[0].getFileAller().getPremierTram()->getPosition().getY() ==
+                tabDeLignes[0].getListeArret().getTeteArret()->getPosition().getY())
+            {
+                Tram *t = tabDeLignes[0].getFileAller().getPremierTram(); // on récupère le premier tram de la file aller
+                tabDeLignes[0].changerFile(*t); // on le change de file
+                tabDeLignes[0].getFileRetour().getDernierTram()->setSens(
+                        !tabDeLignes[0].getFileRetour().getDernierTram()->getSens()); // on actualise le sens du tram
 // changer le getPremier tram ca faux
+            }
         }
-    }
-    if(!tabDeLignes[0].getFileRetour().estVide()) // idem mais pour le sens inverse
-    {
-        if(tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getX() ==
-           tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getX() &&
-           tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getY() ==
-           tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getY())
+        if (!tabDeLignes[0].getFileRetour().estVide()) // idem mais pour le sens inverse
         {
-            Tram *tr=tabDeLignes[0].getFileRetour().getPremierTram();
-            tabDeLignes[0].changerFile(*tr);
-            tabDeLignes[0].getFileAller().getDernierTram()->setSens(!tabDeLignes[0].getFileAller().getDernierTram()->getSens());
+            if (tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getX() ==
+                tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getX() &&
+                tabDeLignes[0].getFileRetour().getPremierTram()->getPosition().getY() ==
+                tabDeLignes[0].getListeArret().getQueueArret()->getPosition().getY())
+            {
+                Tram *t = tabDeLignes[0].getFileRetour().getPremierTram();
+                tabDeLignes[0].changerFile(*t);
+                tabDeLignes[0].getFileAller().getDernierTram()->setSens(
+                        !tabDeLignes[0].getFileAller().getDernierTram()->getSens());
+            }
         }
     }
 
@@ -310,56 +320,64 @@ void changerFileTram(std::vector<Ligne> &tabDeLignes, Tram &tr)
  */
 void mouvementsTrams(std::vector<Ligne> &tabDeLignes)
 {
-    
+
     if(!tabDeLignes[0].getFileAller().estVide()) // si file aller non vide
     {
-        if ( tabDeLignes[0].getFileAller().getPremierTram()->getArretSuivant() == nullptr) // si l'arrêt suivant du premier tram est nul
+        for(int i = 0; i < tabDeLignes[0].getFileAller().getTaille(); i++)
         {
-            tabDeLignes[0].getFileAller().getPremierTram()->setArretSuivant(*tabDeLignes[0].getListeArret().getQueueArret()->getArretPrecedent()); // son arrêt suivant est l'arrêt précédent de queue
+
+            if ( tabDeLignes[0].getFileAller()[i]->getArretSuivant() == nullptr) // si l'arrêt suivant du premier tram est nul
+            {
+                tabDeLignes[0].getFileAller()[i]->setArretSuivant(*tabDeLignes[0].getListeArret().getQueueArret()->getArretPrecedent()); // son arrêt suivant est l'arrêt précédent de queue
+            }
+            tabDeLignes[0].getFileAller()[i]->avance(); // on prend le premier tram de la file
+
+
+            if(tabDeLignes[0].getFileAller()[i]->doitSArreter()) // si le premier tram de la file  doit s'arrêter
+            {
+                tabDeLignes[0].getFileAller()[i]->arret(); // le tram passe à l'arrêt
+                tabDeLignes[0].getFileAller()[i]->setTempsArret(
+                        tabDeLignes[0].getFileAller()[i]->getArretSuivant()->getTempsArret()+time(NULL)); // on modifie son temps d'arrêt au temps de l'arrêt + le temps actuel
+
+            }
+
+            if(tabDeLignes[0].getFileAller()[i]->getTempsArret() < time(NULL)) // si le temps d'arret du tram est inférieur au temsp actuel
+            {
+                tabDeLignes[0].getFileAller()[i]->setVitesse(true); // le tram avance de nouveau
+            }
+
+            changerArretSuivantTram(tabDeLignes,*tabDeLignes[0].getFileAller()[i]); // actualisation de son arrêt suivant
+            changerFileTram(tabDeLignes,*tabDeLignes[0].getFileAller()[i]); // on change le tram de file
         }
-        tabDeLignes[0].getFileAller().getPremierTram()->avance(); // on prend le premier tram de la file
-
-
-        if(tabDeLignes[0].getFileAller().getPremierTram()->doitSArreter()) // si le premier tram de la file  doit s'arrêter
-        {
-            tabDeLignes[0].getFileAller().getPremierTram()->arret(); // le tram passe à l'arrêt
-            tabDeLignes[0].getFileAller().getPremierTram()->setTempsArret(
-                    tabDeLignes[0].getFileAller().getPremierTram()->getArretSuivant()->getTempsArret()+time(NULL)); // on modifie son temps d'arrêt au temps de l'arrêt + le temps actuel
-
-        }
-
-        if(tabDeLignes[0].getFileAller().getPremierTram()->getTempsArret() < time(NULL)) // si le temps d'arret du tram est inférieur au temsp actuel
-        {
-            tabDeLignes[0].getFileAller().getPremierTram()->setVitesse(true); // le tram avance de nouveau
-        }
-
-        changerArretSuivantTram(tabDeLignes,*tabDeLignes[0].getFileAller().getPremierTram()); // actualisation de son arrêt suivant
-        changerFileTram(tabDeLignes,*tabDeLignes[0].getFileAller().getPremierTram()); // on change le tram de file
     }
     if(!tabDeLignes[0].getFileRetour().estVide()) // si file retour non vide
     {
-        if ( tabDeLignes[0].getFileRetour().getPremierTram()->getArretSuivant() == nullptr) // si l'arrêt suivant du premier tram est nul
+        for(int i = 0 ; i < tabDeLignes[0].getFileRetour().getTaille(); i++)
         {
-            tabDeLignes[0].getFileRetour().getPremierTram()->setArretSuivant(*tabDeLignes[0].getListeArret().getTeteArret()->getArretSuivant()); // son arrêt suivant est l'arrêt précédent de queue
+
+            if ( tabDeLignes[0].getFileRetour()[i]->getArretSuivant() == nullptr) // si l'arrêt suivant du premier tram est nul
+            {
+                tabDeLignes[0].getFileRetour()[i]->setArretSuivant(*tabDeLignes[0].getListeArret().getTeteArret()->getArretSuivant()); // son arrêt suivant est l'arrêt précédent de queue
+            }
+
+            tabDeLignes[0].getFileRetour()[i]->avance(); // on prend le premier tram de la file
+
+            if(tabDeLignes[0].getFileRetour()[i]->doitSArreter()) // si le premier tram de la file  doit s'arrêter
+            {
+                tabDeLignes[0].getFileRetour()[i]->arret(); // le tram passe à l'arrêt
+                tabDeLignes[0].getFileRetour()[i]->setTempsArret(
+                        tabDeLignes[0].getFileRetour()[i]->getArretSuivant()->getTempsArret()+time(NULL)); // on modifie son temps d'arrêt au temps de l'arrêt + le temps actuel
+
+            }
+
+            if(tabDeLignes[0].getFileRetour()[i]->getTempsArret() < time(NULL)) // si le temps d'arret du tram est inférieur au temsp actuel
+            {
+                tabDeLignes[0].getFileRetour()[i]->setVitesse(true); // le tram avance de nouveau
+            }
+
+            changerArretSuivantTram(tabDeLignes,*tabDeLignes[0].getFileRetour()[i]);
+            changerFileTram(tabDeLignes,*tabDeLignes[0].getFileRetour()[i]);
         }
-
-        tabDeLignes[0].getFileRetour().getPremierTram()->avance(); // on prend le premier tram de la file
-
-        if(tabDeLignes[0].getFileRetour().getPremierTram()->doitSArreter()) // si le premier tram de la file  doit s'arrêter
-        {
-            tabDeLignes[0].getFileRetour().getPremierTram()->arret(); // le tram passe à l'arrêt
-            tabDeLignes[0].getFileRetour().getPremierTram()->setTempsArret(
-                    tabDeLignes[0].getFileRetour().getPremierTram()->getArretSuivant()->getTempsArret()+time(NULL)); // on modifie son temps d'arrêt au temps de l'arrêt + le temps actuel
-
-        }
-
-        if(tabDeLignes[0].getFileRetour().getPremierTram()->getTempsArret() < time(NULL)) // si le temps d'arret du tram est inférieur au temsp actuel
-        {
-            tabDeLignes[0].getFileRetour().getPremierTram()->setVitesse(true); // le tram avance de nouveau
-        }
-
-        changerArretSuivantTram(tabDeLignes,*tabDeLignes[0].getFileRetour().getPremierTram());
-        changerFileTram(tabDeLignes,*tabDeLignes[0].getFileRetour().getPremierTram());
     }
 
 
@@ -376,6 +394,8 @@ int main() {
 
     std::string nomDeMonFichierDeTypeCsv = "structureFichier.txt";
     lire(nomDeMonFichierDeTypeCsv, tabDeLignes);
+
+
     testAfficherLigne(tabDeLignes);
 
     opengraphsize(800, 500);
@@ -397,15 +417,18 @@ int main() {
 
         Sleep(20);
     }
-    std::cout << "FINI" ;
+
+
+    std::cout << "FINI" << std::endl;
 
 
     getch();
     closegraph();
+   // tabDeLignes[0].~Ligne();
 
 
 
     std::cout << "Hello, World!" << std::endl;
 
-    return 0;
+
 }

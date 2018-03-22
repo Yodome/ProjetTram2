@@ -16,6 +16,9 @@ public:
     // constructeur de la ligne avec des paramètres
 	Ligne(int num);
 
+
+    ~Ligne();
+
     //------------------- GETTER ---------------------
     // Renvoie le numéro de la ligne
 	int getLigne() const;
