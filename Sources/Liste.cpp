@@ -43,20 +43,13 @@ Liste::Liste(Liste & l) //Constructeur par recopie
  */
 Liste::~Liste()     //Destructeur
 {
-    Arret * crt = getTeteArret()->d_arretSuiv;  //On crée un arrêt courant
+    Arret *crt = d_arretTete;
 
-    while(crt != 0)     //Tant que cet arrêt n'est pas nul
+    while(crt != nullptr)
     {
-        if(crt->d_arretSuiv == 0)   //Si l'arrêt suivant est nul
-        {
-            delete crt; //On supprime l'arrêt courant
-        }
-        else    //Sinon
-        {
-            delete crt->d_arretPrec;    //On supprime l'arrêt précédent
-            setTeteArret(*crt);
-            crt = crt->d_arretSuiv;     //On avance l'arrêt courant
-        }
+        d_arretTete = crt->d_arretSuiv;
+        delete crt;
+        crt = d_arretTete;
     }
 }
 
