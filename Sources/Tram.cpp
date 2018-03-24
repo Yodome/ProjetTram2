@@ -7,8 +7,8 @@
 /**
  * Constructeur par défaut initialisant un tram
  */
-Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 0 }, d_distanceMin{ 100 },
-d_vitesseMax{ 10 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
+Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 0 }, d_distanceMin{ 20 },
+d_vitesseMax{ 20 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
 d_numLigne{ 0 }, d_numArretSuiv { 0 }
 {
 
@@ -224,8 +224,7 @@ void Tram::avance()
 {
     if(d_vitesse)
     {
-        double ds;
-        Position posArretSuiv = d_arretSuiv->getPosition();
+        double ds = 0;
 
         if(getSens())
         {
