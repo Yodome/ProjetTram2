@@ -7,7 +7,7 @@
 /**
  * Constructeur par défaut initialisant un tram
  */
-Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ 0 }, d_distanceMin{ 20 },
+Tram::Tram() : d_vitesse{ false }, d_sens{ false }, d_tempsArret{ -1 }, d_distanceMin{ 50 },
 d_vitesseMax{ 20 }, d_position{}, d_tramSuiv{ nullptr }, d_arretSuiv{ nullptr },
 d_numLigne{ 0 }, d_numArretSuiv { 0 }
 {
@@ -247,7 +247,7 @@ void Tram::avance()
 
         if ( dt < 0 )
         {
-            d_position.setPos(d_arretSuiv->getPosition().getX(), d_arretSuiv->getPosition().getY());
+            d_position.setPos(d_arretSuiv->getPosition().getX(), d_arretSuiv->getPosition().getY());    // prend les coordonnées de l'arrêt suivant car distArretSuivant < vitesseMax
         }
         else
         {
@@ -280,7 +280,7 @@ void Tram::avance()
  */
 bool Tram::doitSArreter()
 {
-    return  ( distanceArretSuiv()==0 /*|| distanceTramDevant() <= d_distanceMin*/);
+    return  ( distanceArretSuiv() == 0);
 }
 
 

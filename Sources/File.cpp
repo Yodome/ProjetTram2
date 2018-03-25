@@ -2,6 +2,7 @@
 // Created by e1701567 on 20/02/2018.
 //
 
+#include <cmath>
 #include "..\Headers\File.h"
 
 /**
@@ -130,3 +131,23 @@ Tram *File::operator[](int n) const {
     return t1;
 }
 
+double File::distanceTramDevant(Tram &tr) const
+{
+	Tram * crt = d_premierTram;
+
+	if(crt->getTramSuivant() != nullptr)
+	{
+		while(crt->getTramSuivant() != &tr && crt->getTramSuivant() != nullptr) crt = crt->getTramSuivant();
+
+		if(crt != d_dernierTram)
+		{
+
+			return sqrt( pow(crt->getPosition().getX() - tr.getPosition().getX(), 2) + pow(crt->getPosition().getY() - tr.getPosition().getY(), 2));
+		}
+		else
+		{
+			return -1;
+		}
+	}
+
+}

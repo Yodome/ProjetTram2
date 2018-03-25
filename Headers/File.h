@@ -33,6 +33,8 @@ public:
 
     Tram* operator[](int n) const;
 
+    double distanceTramDevant(Tram &tr) const;
+
 private:
 	int d_taille;	// taille de la file
 	Tram * d_premierTram;	// pointeur sur le premier tram
