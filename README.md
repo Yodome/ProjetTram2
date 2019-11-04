@@ -21,3 +21,6 @@ Etape :
 
 1) Construire et afficher une ligne avec deux ou trois arret. Avec lecture des lignes et arrets dans le fichier texte.
 2) Créer un Tram, le faire se déplacer sur la ligne et faire demi-tour
+
+3
+
